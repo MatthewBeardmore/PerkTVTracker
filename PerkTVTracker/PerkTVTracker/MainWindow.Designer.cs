@@ -35,10 +35,18 @@
             this.totalPointCount = new System.Windows.Forms.Label();
             this.totalHourlyRate = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_add = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButton_week = new System.Windows.Forms.RadioButton();
+            this.radioButton_lastSixHours = new System.Windows.Forms.RadioButton();
+            this.radioButton_hour = new System.Windows.Forms.RadioButton();
+            this.radioButton_today = new System.Windows.Forms.RadioButton();
+            this.radioButton_allTime = new System.Windows.Forms.RadioButton();
             this.lineCurvesChartType = new WinFormsChartSamples.LineCurvesChartType();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label10
@@ -109,6 +117,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.totalHourlyRate);
             this.groupBox1.Controls.Add(this.totalPointCount);
             this.groupBox1.Controls.Add(this.label10);
@@ -121,13 +130,23 @@
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(281, 84);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 100);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(1, 81);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(275, 489);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(305, 489);
             this.flowLayoutPanel1.TabIndex = 19;
             // 
             // button_add
@@ -141,6 +160,79 @@
             this.button_add.UseVisualStyleBackColor = true;
             this.button_add.Click += new System.EventHandler(this.button_add_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.radioButton_week);
+            this.groupBox3.Controls.Add(this.radioButton_lastSixHours);
+            this.groupBox3.Controls.Add(this.radioButton_hour);
+            this.groupBox3.Controls.Add(this.radioButton_today);
+            this.groupBox3.Controls.Add(this.radioButton_allTime);
+            this.groupBox3.Location = new System.Drawing.Point(307, 85);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(640, 56);
+            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Graph Options";
+            // 
+            // radioButton_week
+            // 
+            this.radioButton_week.AutoSize = true;
+            this.radioButton_week.Location = new System.Drawing.Point(97, 26);
+            this.radioButton_week.Name = "radioButton_week";
+            this.radioButton_week.Size = new System.Drawing.Size(67, 24);
+            this.radioButton_week.TabIndex = 4;
+            this.radioButton_week.Text = "Week";
+            this.radioButton_week.UseVisualStyleBackColor = true;
+            this.radioButton_week.CheckedChanged += new System.EventHandler(this.radioButton_graphDisplay_CheckedChanged);
+            // 
+            // radioButton_lastSixHours
+            // 
+            this.radioButton_lastSixHours.AutoSize = true;
+            this.radioButton_lastSixHours.Location = new System.Drawing.Point(247, 26);
+            this.radioButton_lastSixHours.Name = "radioButton_lastSixHours";
+            this.radioButton_lastSixHours.Size = new System.Drawing.Size(108, 24);
+            this.radioButton_lastSixHours.TabIndex = 3;
+            this.radioButton_lastSixHours.Text = "Last 6 hours";
+            this.radioButton_lastSixHours.UseVisualStyleBackColor = true;
+            this.radioButton_lastSixHours.CheckedChanged += new System.EventHandler(this.radioButton_graphDisplay_CheckedChanged);
+            // 
+            // radioButton_hour
+            // 
+            this.radioButton_hour.AutoSize = true;
+            this.radioButton_hour.Location = new System.Drawing.Point(361, 26);
+            this.radioButton_hour.Name = "radioButton_hour";
+            this.radioButton_hour.Size = new System.Drawing.Size(63, 24);
+            this.radioButton_hour.TabIndex = 2;
+            this.radioButton_hour.Text = "Hour";
+            this.radioButton_hour.UseVisualStyleBackColor = true;
+            this.radioButton_hour.CheckedChanged += new System.EventHandler(this.radioButton_graphDisplay_CheckedChanged);
+            // 
+            // radioButton_today
+            // 
+            this.radioButton_today.AutoSize = true;
+            this.radioButton_today.Location = new System.Drawing.Point(170, 26);
+            this.radioButton_today.Name = "radioButton_today";
+            this.radioButton_today.Size = new System.Drawing.Size(71, 24);
+            this.radioButton_today.TabIndex = 1;
+            this.radioButton_today.Text = "Today";
+            this.radioButton_today.UseVisualStyleBackColor = true;
+            this.radioButton_today.CheckedChanged += new System.EventHandler(this.radioButton_graphDisplay_CheckedChanged);
+            // 
+            // radioButton_allTime
+            // 
+            this.radioButton_allTime.AutoSize = true;
+            this.radioButton_allTime.Checked = true;
+            this.radioButton_allTime.Location = new System.Drawing.Point(6, 26);
+            this.radioButton_allTime.Name = "radioButton_allTime";
+            this.radioButton_allTime.Size = new System.Drawing.Size(85, 24);
+            this.radioButton_allTime.TabIndex = 0;
+            this.radioButton_allTime.TabStop = true;
+            this.radioButton_allTime.Text = "All Time";
+            this.radioButton_allTime.UseVisualStyleBackColor = true;
+            this.radioButton_allTime.CheckedChanged += new System.EventHandler(this.radioButton_graphDisplay_CheckedChanged);
+            // 
             // lineCurvesChartType
             // 
             this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -148,9 +240,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
             this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(282, 81);
+            this.lineCurvesChartType.Location = new System.Drawing.Point(307, 147);
             this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(665, 523);
+            this.lineCurvesChartType.Size = new System.Drawing.Size(640, 457);
             this.lineCurvesChartType.TabIndex = 18;
             // 
             // MainWindow
@@ -158,6 +250,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 604);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button_add);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.lineCurvesChartType);
@@ -168,6 +261,8 @@
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -184,6 +279,13 @@
         private WinFormsChartSamples.LineCurvesChartType lineCurvesChartType;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button button_add;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioButton_hour;
+        private System.Windows.Forms.RadioButton radioButton_today;
+        private System.Windows.Forms.RadioButton radioButton_allTime;
+        private System.Windows.Forms.RadioButton radioButton_lastSixHours;
+        private System.Windows.Forms.RadioButton radioButton_week;
     }
 }
 

@@ -8,13 +8,15 @@ namespace PerkTVTracker
 {
     public struct Sample
     {
-        public Sample(int pointCount, DateTime time)
+        public Sample(int pointCount, int lifetimePointCount, DateTime time)
         {
             PointCount = pointCount;
+            LifetimePointCount = lifetimePointCount;
             Time = time;
         }
 
         public int PointCount;
+        public int LifetimePointCount;
         public DateTime Time;
     };
 }

@@ -11,6 +11,7 @@ namespace PerkTVTracker
     {
         public string Email;
         public string Password;
+        public bool ShowOnGraph = true;
 
         public override bool Equals(object obj)
         {

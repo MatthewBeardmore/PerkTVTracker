@@ -10,6 +10,7 @@ namespace PerkTVTracker
     public class DataSummary
     {
         public int PointCount;
+        public int LifetimePointCount;
         public double HourlyRate;
         public DateTime LastSampleTimestamp;
     }

@@ -21,7 +21,7 @@ namespace PerkTVTracker
             _account = account;
         }
 
-        public async Task<int> GetCurrentPointCount()
+        public async Task<KeyValuePair<int, int>> GetCurrentPointCount()
         {
             HttpWebRequest req = CreateAuthenticatedHttpWebRequest("http://perk.com/perk/account");
 
@@ -32,8 +32,34 @@ namespace PerkTVTracker
             doc.LoadHtml(respString);
 
             HtmlNode node = doc.DocumentNode.SelectSingleNode("//span[@id = 'total-points']");
-
+            HtmlNode lifeTimePointsParent = doc.DocumentNode.SelectSingleNode("//div[@class = 'account-info']");
+            
             if (node == null)
+            {
+                throw new Exception();
+            }
+
+            if (lifeTimePointsParent == null)
+            {
+                throw new Exception();
+            }
+
+            HtmlNode lifeTimePointsNode = lifeTimePointsParent.ChildNodes.First((n) => n.Name == "p");
+
+            if(lifeTimePointsNode == null)
+            {
+                throw new Exception();
+            }
+
+            HtmlNode lifeTimeStrong = lifeTimePointsNode.ChildNodes.First((n) => n.Name == "strong");
+
+            if (lifeTimeStrong == null)
+            {
+                throw new Exception();
+            }
+
+            int lifetimePoints;
+            if (!int.TryParse(lifeTimeStrong.InnerText.Replace(",", ""), out lifetimePoints))
             {
                 throw new Exception();
             }
@@ -44,7 +70,7 @@ namespace PerkTVTracker
                 throw new Exception();
             }
 
-            return points;
+            return new KeyValuePair<int,int>(points, lifetimePoints);
         }
 
         private HttpWebRequest CreateAuthenticatedHttpWebRequest(string requestUriString)

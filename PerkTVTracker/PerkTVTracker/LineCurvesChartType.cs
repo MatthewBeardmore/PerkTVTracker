@@ -138,21 +138,24 @@ namespace WinFormsChartSamples
                 chart1.Series.Add(s);
             }
 
-            Series totalSeries = new Series();
-            totalSeries.BorderWidth = 3;
-            totalSeries.ChartArea = "Default";
-            totalSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            totalSeries.MarkerBorderWidth = 2;
-            totalSeries.MarkerSize = 10;
-            totalSeries.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            totalSeries.Name = "Total";
-            totalSeries.IsValueShownAsLabel = false;
-            totalSeries.XValueType = ChartValueType.DateTime;
-            foreach(KeyValuePair<double, double> kvp in totalPoints)
+            if(chart1.Series.Count > 1)
             {
-                totalSeries.Points.AddXY(kvp.Key, kvp.Value);
+                Series totalSeries = new Series();
+                totalSeries.BorderWidth = 3;
+                totalSeries.ChartArea = "Default";
+                totalSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                totalSeries.MarkerBorderWidth = 2;
+                totalSeries.MarkerSize = 10;
+                totalSeries.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+                totalSeries.Name = "Total";
+                totalSeries.IsValueShownAsLabel = false;
+                totalSeries.XValueType = ChartValueType.DateTime;
+                foreach (KeyValuePair<double, double> kvp in totalPoints)
+                {
+                    totalSeries.Points.AddXY(kvp.Key, kvp.Value);
+                }
+                chart1.Series.Add(totalSeries);
             }
-            chart1.Series.Add(totalSeries);
         }
     }
 }

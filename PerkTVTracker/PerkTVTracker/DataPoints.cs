@@ -17,7 +17,7 @@ namespace PerkTVTracker
             Points.Add(summary);
         }
 
-        public Series ConstructSeries(Account account)
+        public Series ConstructSeries(Account account, GraphType graphType)
         {
             Series series = new Series();
             series.BorderWidth = 3;
@@ -30,9 +30,18 @@ namespace PerkTVTracker
             series.IsValueShownAsLabel = false;
             series.XValueType = ChartValueType.DateTime;
 
+            DateTime now = DateTime.Now;
             foreach(DataSummary summary in Points)
             {
-                series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
+                TimeSpan diff = now - summary.LastSampleTimestamp;
+                if (graphType == GraphType.AllTime ||
+                    (graphType == GraphType.Week && diff.TotalHours < (24.0 * 7)) ||
+                    (graphType == GraphType.Today && diff.TotalHours < 24.0) ||
+                    (graphType == GraphType.LastSixHours && diff.TotalHours < 6) ||
+                    (graphType == GraphType.LastHour && diff.TotalHours < 1.0))
+                {
+                    series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
+                }
             }
 
             return series;

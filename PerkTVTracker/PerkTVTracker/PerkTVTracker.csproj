@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="DataPoints.cs" />
     <Compile Include="DataSummary.cs" />
+    <Compile Include="GraphType.cs" />
     <Compile Include="LinearDataProcessor.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

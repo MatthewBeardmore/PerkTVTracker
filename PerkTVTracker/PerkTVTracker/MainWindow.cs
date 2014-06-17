@@ -91,7 +91,7 @@ namespace PerkTVTracker
 
         private void AddAccount(Account account)
         {
-            SessionViewControl control = new SessionViewControl(account, RemoveAccount);
+            SessionViewControl control = new SessionViewControl(account, RemoveAccount, RebuildGraphs);
             flowLayoutPanel1.Controls.Add(control);
 
             _sessions.Add(PerkLogInAgent.Login(account), new LinearDataProcessor() { SampleAgeLimit = new TimeSpan(1, 0, 0) });
@@ -117,8 +117,8 @@ namespace PerkTVTracker
             {
                 try
                 {
-                    int pointCount = await kvp.Key.GetCurrentPointCount();
-                    kvp.Value.AddSample(pointCount, sampleTime);
+                    KeyValuePair<int, int> pointCount = await kvp.Key.GetCurrentPointCount();
+                    kvp.Value.AddSample(pointCount.Key, pointCount.Value, sampleTime);
 
                     DataSummary summary = kvp.Value.GetDataSummary();
 
@@ -138,12 +138,7 @@ namespace PerkTVTracker
 
             if (updateGraph)
             {
-                List<Series> series = new List<Series>();
-                foreach (var kvp in Program.Settings.DataPoints)
-                {
-                    series.Add(kvp.Value.ConstructSeries(kvp.Key));
-                }
-                lineCurvesChartType.SetSeries(series);
+                RebuildGraphs();
                 _sampleTimer.Interval = 60000;
             }
 
@@ -155,6 +150,21 @@ namespace PerkTVTracker
             }
         }
 
+        private void RebuildGraphs()
+        {
+            GraphType graphType = radioButton_allTime.Checked ? GraphType.AllTime :
+                radioButton_week.Checked ? GraphType.Week :
+                radioButton_today.Checked ? GraphType.Today : radioButton_lastSixHours.Checked ? 
+                GraphType.LastSixHours : GraphType.LastHour;
+            List<Series> series = new List<Series>();
+            foreach (var kvp in Program.Settings.DataPoints)
+            {
+                if (kvp.Key.ShowOnGraph)
+                    series.Add(kvp.Value.ConstructSeries(kvp.Key, graphType));
+            }
+            lineCurvesChartType.SetSeries(series);
+        }
+
         private void button_add_Click(object sender, EventArgs e)
         {
             AddAccount form = new AddAccount();
@@ -164,6 +174,11 @@ namespace PerkTVTracker
                 Program.Settings.AddAccount(form.Account);
                 OnSampleTimerTick(_sampleTimer, EventArgs.Empty, false);
             }
+        }
+
+        private void radioButton_graphDisplay_CheckedChanged(object sender, EventArgs e)
+        {
+            RebuildGraphs();
         }
     }
 }
