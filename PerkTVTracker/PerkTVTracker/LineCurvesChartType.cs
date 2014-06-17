@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Collections.Generic;
 
-namespace WinFormsChartSamples
+namespace PerkTVTracker
 {
 	/// <summary>
 	/// Summary description for LineCurvesChartType.
@@ -120,10 +120,32 @@ namespace WinFormsChartSamples
 
 		#endregion
 
+        private static Color[] _colorsBrightPastel = new Color[]
+		{
+			Color.FromArgb(65, 140, 240), 
+			Color.FromArgb(252, 180, 65), 
+			Color.FromArgb(224, 64, 10), 
+			Color.FromArgb(5, 100, 146), 
+			Color.FromArgb(191, 191, 191), 
+			Color.FromArgb(26, 59, 105), 
+			Color.FromArgb(255, 227, 130), 
+			Color.FromArgb(18, 156, 221), 
+			Color.FromArgb(202, 107, 75), 
+			Color.FromArgb(0, 92, 219), 
+			Color.FromArgb(243, 210, 136), 
+			Color.FromArgb(80, 99, 129), 
+			Color.FromArgb(241, 185, 168), 
+			Color.FromArgb(224, 131, 10), 
+			Color.FromArgb(120, 147, 190)
+		};
+
         public void SetSeries(List<Series> series)
         {
+            int colorCntr = -1;
+
             Dictionary<double, double> totalPoints = new Dictionary<double, double>();
             chart1.Series.Clear();
+            string lastTag = null;
             foreach(Series s in series)
             {
                 foreach(DataPoint point in s.Points)
@@ -135,25 +157,37 @@ namespace WinFormsChartSamples
                     else
                         totalPoints.Add(point.XValue, point.YValues[0]);
                 }
+                //Fix the color so that any derivative series match up with their other parts
+                if (lastTag != s.Tag.ToString())
+                    colorCntr++;
+                lastTag = s.Tag.ToString();
+
+                s.Color = _colorsBrightPastel[colorCntr];
                 chart1.Series.Add(s);
             }
 
             if(chart1.Series.Count > 1)
             {
-                Series totalSeries = new Series();
-                totalSeries.BorderWidth = 3;
-                totalSeries.ChartArea = "Default";
-                totalSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                totalSeries.MarkerBorderWidth = 2;
-                totalSeries.MarkerSize = 10;
-                totalSeries.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-                totalSeries.Name = "Total";
-                totalSeries.IsValueShownAsLabel = false;
-                totalSeries.XValueType = ChartValueType.DateTime;
+                colorCntr++;
+                double lastDataPoint = -1;
+                Series totalSeries = DataPoints.CreateDefaultSeries("Total");
+                int cntr = 1;
+
                 foreach (KeyValuePair<double, double> kvp in totalPoints)
                 {
+                    if (lastDataPoint != -1 && (kvp.Key - lastDataPoint) > 0.01)
+                    {
+                        //Start a new series so that we don't get a massive line connecting points 
+                        //  that are not next to each other
+                        totalSeries.Color = _colorsBrightPastel[colorCntr];
+                        chart1.Series.Add(totalSeries);
+                        totalSeries = DataPoints.CreateDefaultSeries("Total", cntr++, false);
+                    }
+                    lastDataPoint = kvp.Key;
+
                     totalSeries.Points.AddXY(kvp.Key, kvp.Value);
                 }
+                totalSeries.Color = _colorsBrightPastel[colorCntr];
                 chart1.Series.Add(totalSeries);
             }
         }

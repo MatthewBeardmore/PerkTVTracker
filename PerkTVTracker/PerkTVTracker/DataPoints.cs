@@ -17,20 +17,14 @@ namespace PerkTVTracker
             Points.Add(summary);
         }
 
-        public Series ConstructSeries(Account account, GraphType graphType)
+        public List<Series> ConstructSeries(Account account, GraphType graphType)
         {
-            Series series = new Series();
-            series.BorderWidth = 3;
-            series.ChartArea = "Default";
-            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series.MarkerBorderWidth = 2;
-            series.MarkerSize = 10;
-            series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series.Name = account.Email;
-            series.IsValueShownAsLabel = false;
-            series.XValueType = ChartValueType.DateTime;
+            List<Series> allSeries = new List<Series>();
+
+            Series series = CreateDefaultSeries(account.Email);
 
             DateTime now = DateTime.Now;
+            DateTime lastDataPoint = DateTime.MinValue;
             foreach(DataSummary summary in Points)
             {
                 TimeSpan diff = now - summary.LastSampleTimestamp;
@@ -40,9 +34,39 @@ namespace PerkTVTracker
                     (graphType == GraphType.LastSixHours && diff.TotalHours < 6) ||
                     (graphType == GraphType.LastHour && diff.TotalHours < 1.0))
                 {
+                    TimeSpan diffFromLastPoint = summary.LastSampleTimestamp - lastDataPoint;
+
+                    if (lastDataPoint != DateTime.MinValue && diffFromLastPoint.TotalMinutes > 5)
+                    {
+                        //Start a new series so that we don't get a massive line connecting points 
+                        //  that are not next to each other
+                        allSeries.Add(series);
+                        series = CreateDefaultSeries(account.Email, allSeries.Count, false);
+                    }
+                    lastDataPoint = summary.LastSampleTimestamp;
+
                     series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
                 }
             }
+
+            allSeries.Add(series);
+            return allSeries;
+        }
+
+        public static Series CreateDefaultSeries(string name, int? cntr = null, bool displayOnLegend = true)
+        {
+            Series series = new Series();
+            series.BorderWidth = 3;
+            series.ChartArea = "Default";
+            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series.MarkerBorderWidth = 2;
+            series.MarkerSize = 10;
+            series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series.Name = name + (cntr == null ? "" : cntr.ToString());
+            series.Tag = name;
+            series.IsValueShownAsLabel = false;
+            series.XValueType = ChartValueType.DateTime;
+            series.IsVisibleInLegend = displayOnLegend;
 
             return series;
         }

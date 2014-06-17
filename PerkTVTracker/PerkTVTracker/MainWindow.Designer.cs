@@ -44,7 +44,7 @@
             this.radioButton_hour = new System.Windows.Forms.RadioButton();
             this.radioButton_today = new System.Windows.Forms.RadioButton();
             this.radioButton_allTime = new System.Windows.Forms.RadioButton();
-            this.lineCurvesChartType = new WinFormsChartSamples.LineCurvesChartType();
+            this.lineCurvesChartType = new LineCurvesChartType();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -276,7 +276,7 @@
         private System.Windows.Forms.Label totalPointCount;
         private System.Windows.Forms.Label totalHourlyRate;
         private System.Windows.Forms.GroupBox groupBox1;
-        private WinFormsChartSamples.LineCurvesChartType lineCurvesChartType;
+        private LineCurvesChartType lineCurvesChartType;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button button_add;
         private System.Windows.Forms.GroupBox groupBox2;

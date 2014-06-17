@@ -21,7 +21,6 @@ namespace PerkTVTracker
         private Random _generator = new Random();
         private Timer _sampleTimer = new Timer();
         private Timer _displayTimer = new Timer();
-        private int _seriesCntr = 0;
         private Dictionary<PerkSession, LinearDataProcessor> _sessions = new Dictionary<PerkSession, LinearDataProcessor>();
         
         public MainWindow()
@@ -160,7 +159,7 @@ namespace PerkTVTracker
             foreach (var kvp in Program.Settings.DataPoints)
             {
                 if (kvp.Key.ShowOnGraph)
-                    series.Add(kvp.Value.ConstructSeries(kvp.Key, graphType));
+                    series.AddRange(kvp.Value.ConstructSeries(kvp.Key, graphType));
             }
             lineCurvesChartType.SetSeries(series);
         }
