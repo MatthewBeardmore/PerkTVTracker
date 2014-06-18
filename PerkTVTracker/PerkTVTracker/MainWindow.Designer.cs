@@ -44,10 +44,10 @@
             this.hideSidebarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -119,7 +119,7 @@
             this.last6HoursToolStripMenuItem,
             this.lastHourToolStripMenuItem});
             this.timeSpanToolStripMenuItem.Name = "timeSpanToolStripMenuItem";
-            this.timeSpanToolStripMenuItem.Size = new System.Drawing.Size(148, 24);
+            this.timeSpanToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.timeSpanToolStripMenuItem.Text = "Time Span";
             // 
             // allTimeToolStripMenuItem
@@ -166,6 +166,9 @@
             // 
             // viewToolStripMenuItem
             // 
+            this.viewToolStripMenuItem.Checked = true;
+            this.viewToolStripMenuItem.CheckOnClick = true;
+            this.viewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hideSidebarToolStripMenuItem,
             this.hideGraphToolStripMenuItem});
@@ -175,16 +178,22 @@
             // 
             // hideSidebarToolStripMenuItem
             // 
+            this.hideSidebarToolStripMenuItem.Checked = true;
+            this.hideSidebarToolStripMenuItem.CheckOnClick = true;
+            this.hideSidebarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideSidebarToolStripMenuItem.Name = "hideSidebarToolStripMenuItem";
-            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.hideSidebarToolStripMenuItem.Text = "Hide Sidebar";
+            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.hideSidebarToolStripMenuItem.Text = "Show Sidebar";
             this.hideSidebarToolStripMenuItem.Click += new System.EventHandler(this.hideSidebarToolStripMenuItem_Click);
             // 
             // hideGraphToolStripMenuItem
             // 
+            this.hideGraphToolStripMenuItem.Checked = true;
+            this.hideGraphToolStripMenuItem.CheckOnClick = true;
+            this.hideGraphToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideGraphToolStripMenuItem.Name = "hideGraphToolStripMenuItem";
-            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.hideGraphToolStripMenuItem.Text = "Hide Graph";
+            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.hideGraphToolStripMenuItem.Text = "Show Graph";
             this.hideGraphToolStripMenuItem.Click += new System.EventHandler(this.hideGraphToolStripMenuItem_Click);
             // 
             // splitContainer1
@@ -208,6 +217,18 @@
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 0);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(665, 573);
+            this.lineCurvesChartType.TabIndex = 18;
             // 
             // statusStrip1
             // 
@@ -233,18 +254,6 @@
             this.nextSampletoolStripStatusLabel.Name = "nextSampletoolStripStatusLabel";
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(87, 20);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
-            // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 0);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(662, 573);
-            this.lineCurvesChartType.TabIndex = 18;
             // 
             // MainWindow
             // 

@@ -42,6 +42,7 @@ namespace PerkTVTracker
         {
             int cnt = 1;
             int allPointCount = 0;
+            int allLifetimePointCount = 0;
             double allHourlyRate = 0;
             int numSecondsTilNextSample = 0;
 
@@ -56,6 +57,7 @@ namespace PerkTVTracker
                         DateTime.Now).TotalSeconds);
             
                 allPointCount += summary.PointCount;
+                allLifetimePointCount += summary.LifetimePointCount;
                 allHourlyRate += summary.HourlyRate;
                 cnt++;
             }
@@ -63,21 +65,13 @@ namespace PerkTVTracker
             nextSampletoolStripStatusLabel.Text = numSecondsTilNextSample + (numSecondsTilNextSample != 1 ? " seconds" : " second");
 
             int totalHourlyRateAmt = (int)Math.Round(allHourlyRate);
-            DataSummary totalSummary = new DataSummary() { HourlyRate = totalHourlyRateAmt, PointCount = allPointCount };
+            DataSummary totalSummary = new DataSummary()
+            { 
+                HourlyRate = totalHourlyRateAmt,
+                PointCount = allPointCount,
+                LifetimePointCount = allLifetimePointCount
+            };
             (flowLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
-            /*totalPointCount.Text = allPointCount.ToString("#,##0 points");
-
-            string formattedHourly = totalHourlyRateAmt.ToString("#,##0");
-            totalHourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, totalHourlyRateAmt != 1 ? "points" : "point");*/
-        }
-
-        private void UpdateDisplay(DataSummary summary, Label pointCountLbl, Label hourlyRateLbl)
-        {
-            pointCountLbl.Text = summary.PointCount.ToString("#,##0 points");
-
-            int hourlyRate = (int)Math.Round(summary.HourlyRate);
-            string formattedHourly = hourlyRate.ToString("#,##0");
-            hourlyRateLbl.Text = string.Format("{0} {1}/hour", formattedHourly, hourlyRate != 1 ? "points" : "point");
         }
 
         private void OnFormShown(object sender, EventArgs e)
@@ -194,8 +188,8 @@ namespace PerkTVTracker
         {
             splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
 
-            hideSidebarToolStripMenuItem.Text = splitContainer1.Panel1Collapsed ? "Show Sidebar" : "Hide Sidebar";
-            hideGraphToolStripMenuItem.Text = splitContainer1.Panel2Collapsed ? "Show Graph" : "Hide Graph";
+            hideSidebarToolStripMenuItem.Checked = !splitContainer1.Panel1Collapsed;
+            hideGraphToolStripMenuItem.Checked = !splitContainer1.Panel2Collapsed;
         }
 
         private void hideGraphToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,8 +204,8 @@ namespace PerkTVTracker
 
         private void splitContainer1_Panel2_ClientSizeChanged(object sender, EventArgs e)
         {
-            hideSidebarToolStripMenuItem.Text = splitContainer1.Panel1Collapsed ? "Show Sidebar" : "Hide Sidebar";
-            hideGraphToolStripMenuItem.Text = splitContainer1.Panel2Collapsed ? "Show Graph" : "Hide Graph";
+            hideSidebarToolStripMenuItem.Checked = !splitContainer1.Panel1Collapsed;
+            hideGraphToolStripMenuItem.Checked = !splitContainer1.Panel2Collapsed;
         }
     }
 }
