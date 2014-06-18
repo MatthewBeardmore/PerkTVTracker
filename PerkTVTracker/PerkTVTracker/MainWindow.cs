@@ -207,5 +207,10 @@ namespace PerkTVTracker
             hideSidebarToolStripMenuItem.Checked = !splitContainer1.Panel1Collapsed;
             hideGraphToolStripMenuItem.Checked = !splitContainer1.Panel2Collapsed;
         }
+
+        private void showLifetimePointsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.Settings.HideLifetimePoints = !showLifetimePointsToolStripMenuItem.Checked;
+        }
     }
 }

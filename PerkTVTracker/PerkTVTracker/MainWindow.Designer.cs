@@ -44,10 +44,11 @@
             this.hideSidebarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
+            this.showLifetimePointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -171,7 +172,8 @@
             this.viewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hideSidebarToolStripMenuItem,
-            this.hideGraphToolStripMenuItem});
+            this.hideGraphToolStripMenuItem,
+            this.showLifetimePointsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.viewToolStripMenuItem.Text = "View";
@@ -182,7 +184,7 @@
             this.hideSidebarToolStripMenuItem.CheckOnClick = true;
             this.hideSidebarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideSidebarToolStripMenuItem.Name = "hideSidebarToolStripMenuItem";
-            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
             this.hideSidebarToolStripMenuItem.Text = "Show Sidebar";
             this.hideSidebarToolStripMenuItem.Click += new System.EventHandler(this.hideSidebarToolStripMenuItem_Click);
             // 
@@ -192,7 +194,7 @@
             this.hideGraphToolStripMenuItem.CheckOnClick = true;
             this.hideGraphToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideGraphToolStripMenuItem.Name = "hideGraphToolStripMenuItem";
-            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
             this.hideGraphToolStripMenuItem.Text = "Show Graph";
             this.hideGraphToolStripMenuItem.Click += new System.EventHandler(this.hideGraphToolStripMenuItem_Click);
             // 
@@ -218,18 +220,6 @@
             this.splitContainer1.TabIndex = 23;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 0);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(665, 573);
-            this.lineCurvesChartType.TabIndex = 18;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -254,6 +244,28 @@
             this.nextSampletoolStripStatusLabel.Name = "nextSampletoolStripStatusLabel";
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(87, 20);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 0);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(665, 573);
+            this.lineCurvesChartType.TabIndex = 18;
+            // 
+            // showLifetimePointsToolStripMenuItem
+            // 
+            this.showLifetimePointsToolStripMenuItem.Checked = true;
+            this.showLifetimePointsToolStripMenuItem.CheckOnClick = true;
+            this.showLifetimePointsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showLifetimePointsToolStripMenuItem.Name = "showLifetimePointsToolStripMenuItem";
+            this.showLifetimePointsToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.showLifetimePointsToolStripMenuItem.Text = "Show Lifetime Points";
+            this.showLifetimePointsToolStripMenuItem.Click += new System.EventHandler(this.showLifetimePointsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -303,6 +315,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel nextSampletoolStripStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem showLifetimePointsToolStripMenuItem;
     }
 }
 

@@ -38,6 +38,12 @@ namespace PerkTVTracker
             get { return _dataPoints; }
         }
 
+        public bool HideLifetimePoints
+        {
+            get;
+            set;
+        }
+
         public void AddAccount(Account account)
         {
             if (_accounts.Contains(account))

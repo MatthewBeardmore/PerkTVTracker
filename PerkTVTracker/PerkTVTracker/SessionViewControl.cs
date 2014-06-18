@@ -44,7 +44,7 @@ namespace PerkTVTracker
         public void UpdateDisplay(DataSummary summary)
         {
             pointCount.Text = summary.PointCount.ToString("#,##0 pts");
-            if (summary.LifetimePointCount > 0)
+            if (summary.LifetimePointCount > 0 && !Program.Settings.HideLifetimePoints)
             {
                 pointCount.Text += summary.LifetimePointCount.ToString(" (of #,##0)");
             }
