@@ -176,6 +176,12 @@ namespace PerkTVTracker
 
         private void graphDisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            allTimeToolStripMenuItem.Checked =
+                weekToolStripMenuItem.Checked =
+                todayToolStripMenuItem.Checked =
+                last6HoursToolStripMenuItem.Checked =
+                lastHourToolStripMenuItem.Checked = false;
+            ((ToolStripMenuItem)sender).Checked = true;
             RebuildGraphs();
         }
 
@@ -211,6 +217,20 @@ namespace PerkTVTracker
         private void showLifetimePointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.Settings.HideLifetimePoints = !showLifetimePointsToolStripMenuItem.Checked;
+        }
+
+        private void clearDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(var kvp in Program.Settings.DataPoints)
+            {
+                kvp.Value.Points.Clear();
+            }
+            RebuildGraphs();
+        }
+
+        private void removeTop10OfDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
