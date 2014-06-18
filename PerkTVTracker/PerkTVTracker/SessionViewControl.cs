@@ -41,10 +41,12 @@ namespace PerkTVTracker
             _initialized = true;
         }
 
+        public bool ShowLifetimeCount { get; set; }
+
         public void UpdateDisplay(DataSummary summary)
         {
             pointCount.Text = summary.PointCount.ToString("#,##0 pts");
-            if (summary.LifetimePointCount > 0)
+            if (ShowLifetimeCount && summary.LifetimePointCount > 0)
             {
                 pointCount.Text += summary.LifetimePointCount.ToString(" (of #,##0)");
             }
