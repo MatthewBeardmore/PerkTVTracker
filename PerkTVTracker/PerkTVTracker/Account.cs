@@ -12,6 +12,7 @@ namespace PerkTVTracker
         public string Email;
         public string Password;
         public bool ShowOnGraph = true;
+        public DataPoints DataPoints = new DataPoints();
 
         public override bool Equals(object obj)
         {

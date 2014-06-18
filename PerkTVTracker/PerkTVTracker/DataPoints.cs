@@ -17,6 +17,12 @@ namespace PerkTVTracker
             get { return _points; }
         }
 
+        public List<DataSummary> XmlPoints
+        {
+            get { return _points; }
+            set { _points = value; }
+        }
+
         public void Initialize()
         {
             if(_points == null)

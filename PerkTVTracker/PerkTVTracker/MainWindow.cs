@@ -122,7 +122,7 @@ namespace PerkTVTracker
 
                     if (summary.HourlyRate != 0 && updateGraph)
                     {
-                        DataPoints points = Program.Settings.DataPoints[kvp.Key._account];
+                        DataPoints points = Program.Settings.GetDataPointsForAccount(kvp.Key._account);
                         points.AddPoint(summary);
                     }
 
@@ -155,10 +155,10 @@ namespace PerkTVTracker
                 todayToolStripMenuItem.Checked ? GraphType.Today : last6HoursToolStripMenuItem.Checked ? 
                 GraphType.LastSixHours : GraphType.LastHour;
             List<Series> series = new List<Series>();
-            foreach (var kvp in Program.Settings.DataPoints)
+            foreach (var acc in Program.Settings.Accounts)
             {
-                if (kvp.Key.ShowOnGraph)
-                    series.AddRange(kvp.Value.ConstructSeries(kvp.Key, graphType));
+                if (acc.ShowOnGraph)
+                    series.AddRange(acc.DataPoints.ConstructSeries(acc, graphType));
             }
             lineCurvesChartType.SetSeries(series);
         }
@@ -216,29 +216,30 @@ namespace PerkTVTracker
 
         private void clearDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach(var kvp in Program.Settings.DataPoints)
+            foreach (var acc in Program.Settings.Accounts)
             {
-                kvp.Value.ClearPoints();
+                acc.DataPoints.ClearPoints();
             }
             RebuildGraphs();
         }
 
         private void removeTop10OfDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var dataPoints in Program.Settings.DataPoints.Values)
+            foreach (var acc in Program.Settings.Accounts)
             {
-                double maxValue = dataPoints.Points.Max((s) => s.HourlyRate);
+                double maxValue = acc.DataPoints.Points.Max((s) => s.HourlyRate);
 
                 double pointToRemove = maxValue - (maxValue * 0.10);
 
                 List<DataSummary> pointsToRemove = new List<DataSummary>();
-                foreach(DataSummary summary in dataPoints.Points)
+                foreach (DataSummary summary in acc.DataPoints.Points)
                 {
                     if(summary.HourlyRate >= pointToRemove)
                         pointsToRemove.Add(summary);
                 }
+
                 foreach(DataSummary summary in pointsToRemove)
-                    dataPoints.RemovePoint(summary);
+                    acc.DataPoints.RemovePoint(summary);
             }
         }
     }

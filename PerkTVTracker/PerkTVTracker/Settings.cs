@@ -14,32 +14,15 @@ namespace PerkTVTracker
     {
         private List<Account> _accounts = new List<Account>();
 
-        private Dictionary<Account, DataPoints> _dataPoints = new Dictionary<Account, DataPoints>();
-
-        public void Initialize()
-        {
-            if (_accounts == null)
-                _accounts = new List<Account>();
-            if (_dataPoints == null)
-                _dataPoints = new Dictionary<Account, DataPoints>();
-
-            foreach(Account account in _accounts)
-            {
-                if (!_dataPoints.ContainsKey(account))
-                    _dataPoints.Add(account, new DataPoints());
-            }
-            foreach (DataPoints pts in _dataPoints.Values)
-                pts.Initialize();
-        }
-
         public IReadOnlyCollection<Account> Accounts
         {
             get { return _accounts.AsReadOnly(); }
         }
 
-        public IReadOnlyDictionary<Account, DataPoints> DataPoints
+        public List<Account> XmlAccounts
         {
-            get { return _dataPoints; }
+            get { return _accounts; }
+            set { _accounts = value; }
         }
 
         public bool HideLifetimePoints
@@ -56,7 +39,6 @@ namespace PerkTVTracker
             }
 
             _accounts.Add(account);
-            _dataPoints.Add(account, new DataPoints());
 
             SaveSettings();
         }
@@ -64,7 +46,6 @@ namespace PerkTVTracker
         public void RemoveAccount(Account account)
         {
             _accounts.Remove(account);
-            _dataPoints.Remove(account);
 
             SaveSettings();
         }
@@ -80,7 +61,6 @@ namespace PerkTVTracker
                     //settings = formatter.Deserialize(fs) as Settings;
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                     settings = serializer.Deserialize(fs) as Settings;
-                    settings.Initialize();
                 }
             }
             catch
@@ -91,6 +71,14 @@ namespace PerkTVTracker
                 settings.SaveSettings();
             }
             return settings;
+        }
+
+        public DataPoints GetDataPointsForAccount(Account account)
+        {
+            foreach (Account acc in Accounts)
+                if (acc == account)
+                    return acc.DataPoints;
+            return null;
         }
 
         public void SaveSettings()
