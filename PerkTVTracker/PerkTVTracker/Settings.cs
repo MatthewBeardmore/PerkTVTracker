@@ -31,6 +31,12 @@ namespace PerkTVTracker
             set;
         }
 
+        public bool ClearDataPointsOnStartup
+        {
+            get;
+            set;
+        }
+
         public void AddAccount(Account account)
         {
             if (_accounts.Contains(account))
@@ -57,10 +63,11 @@ namespace PerkTVTracker
             {
                 using (var fs = File.OpenRead("settings.xml"))
                 {
-                    //var formatter = new BinaryFormatter();
-                    //settings = formatter.Deserialize(fs) as Settings;
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                     settings = serializer.Deserialize(fs) as Settings;
+                    if (settings.ClearDataPointsOnStartup)
+                        foreach (Account account in settings.Accounts)
+                            account.DataPoints.ClearPoints();
                 }
             }
             catch
@@ -87,8 +94,6 @@ namespace PerkTVTracker
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                 serializer.Serialize(fs, this);
-                //var formatter = new BinaryFormatter();
-                //formatter.Serialize(fs, this);
             }
         }
     }

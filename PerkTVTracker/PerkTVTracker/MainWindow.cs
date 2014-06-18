@@ -76,9 +76,9 @@ namespace PerkTVTracker
 
         private void OnFormShown(object sender, EventArgs e)
         {
-            SessionViewControl control = new SessionViewControl();
-            flowLayoutPanel1.Controls.Add(control);
-
+            showLifetimePointsToolStripMenuItem.Checked = !Program.Settings.HideLifetimePoints;
+            persistDataToolStripMenuItem.Checked = !Program.Settings.ClearDataPointsOnStartup;
+            splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width;
             foreach(Account account in Program.Settings.Accounts)
             {
                 AddAccount(account);
@@ -241,6 +241,11 @@ namespace PerkTVTracker
                 foreach(DataSummary summary in pointsToRemove)
                     acc.DataPoints.RemovePoint(summary);
             }
+        }
+
+        private void persistDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.Settings.ClearDataPointsOnStartup = !persistDataToolStripMenuItem.Checked;
         }
     }
 }
