@@ -203,11 +203,6 @@ namespace PerkTVTracker
             splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
         }
 
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            splitContainer1.SplitterDistance = 283;
-        }
-
         private void splitContainer1_Panel2_ClientSizeChanged(object sender, EventArgs e)
         {
             hideSidebarToolStripMenuItem.Checked = !splitContainer1.Panel1Collapsed;
