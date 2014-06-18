@@ -10,11 +10,22 @@ namespace PerkTVTracker
     [Serializable]
     public class DataPoints
     {
-        public List<DataSummary> Points = new List<DataSummary>();
+        private List<DataSummary> _points = new List<DataSummary>();
 
+        public IReadOnlyList<DataSummary> Points
+        {
+            get { return _points; }
+        }
+
+        public void Initialize()
+        {
+            if(_points == null)
+                _points = new List<DataSummary>();
+        }
+        
         public void AddPoint(DataSummary summary)
         {
-            Points.Add(summary);
+            _points.Add(summary);
         }
 
         public List<Series> ConstructSeries(Account account, GraphType graphType)
@@ -69,6 +80,16 @@ namespace PerkTVTracker
             series.IsVisibleInLegend = displayOnLegend;
 
             return series;
+        }
+
+        public void RemovePoint(DataSummary summary)
+        {
+            _points.Remove(summary);
+        }
+
+        public void ClearPoints()
+        {
+            _points.Clear();
         }
     }
 }

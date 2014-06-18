@@ -223,14 +223,28 @@ namespace PerkTVTracker
         {
             foreach(var kvp in Program.Settings.DataPoints)
             {
-                kvp.Value.Points.Clear();
+                kvp.Value.ClearPoints();
             }
             RebuildGraphs();
         }
 
         private void removeTop10OfDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach (var dataPoints in Program.Settings.DataPoints.Values)
+            {
+                double maxValue = dataPoints.Points.Max((s) => s.HourlyRate);
 
+                double pointToRemove = maxValue - (maxValue * 0.10);
+
+                List<DataSummary> pointsToRemove = new List<DataSummary>();
+                foreach(DataSummary summary in dataPoints.Points)
+                {
+                    if(summary.HourlyRate >= pointToRemove)
+                        pointsToRemove.Add(summary);
+                }
+                foreach(DataSummary summary in pointsToRemove)
+                    dataPoints.RemovePoint(summary);
+            }
         }
     }
 }

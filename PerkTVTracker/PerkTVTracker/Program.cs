@@ -25,22 +25,7 @@ namespace PerkTVTracker
         static void Main()
         {
             // Deserialize settings file
-            try
-            {
-                using (var fs = File.OpenRead("settings.bin"))
-                {
-                    var formatter = new BinaryFormatter();
-                    _settings = formatter.Deserialize(fs) as Settings;
-                    _settings.Initialize();
-                }
-            }
-            catch
-            {
-                // Create the settings file
-                _settings = new Settings();
-
-                _settings.SaveSettings();
-            }
+            _settings = Settings.LoadSettings();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
