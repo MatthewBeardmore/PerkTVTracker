@@ -40,7 +40,7 @@ namespace PerkTVTracker
 
         private void OnDisplayTimerTick(object sender, EventArgs e)
         {
-            int cnt = 0;
+            int cnt = 1;
             int allPointCount = 0;
             double allHourlyRate = 0;
             int numSecondsTilNextSample = 0;
@@ -60,13 +60,15 @@ namespace PerkTVTracker
                 cnt++;
             }
 
-            nextSample.Text = numSecondsTilNextSample + (numSecondsTilNextSample != 1 ? " seconds" : " second");
-            
-            totalPointCount.Text = allPointCount.ToString("#,##0 points");
+            nextSampletoolStripStatusLabel.Text = numSecondsTilNextSample + (numSecondsTilNextSample != 1 ? " seconds" : " second");
 
             int totalHourlyRateAmt = (int)Math.Round(allHourlyRate);
+            DataSummary totalSummary = new DataSummary() { HourlyRate = totalHourlyRateAmt, PointCount = allPointCount };
+            (flowLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
+            /*totalPointCount.Text = allPointCount.ToString("#,##0 points");
+
             string formattedHourly = totalHourlyRateAmt.ToString("#,##0");
-            totalHourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, totalHourlyRateAmt != 1 ? "points" : "point");
+            totalHourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, totalHourlyRateAmt != 1 ? "points" : "point");*/
         }
 
         private void UpdateDisplay(DataSummary summary, Label pointCountLbl, Label hourlyRateLbl)
@@ -80,6 +82,9 @@ namespace PerkTVTracker
 
         private void OnFormShown(object sender, EventArgs e)
         {
+            SessionViewControl control = new SessionViewControl();
+            flowLayoutPanel1.Controls.Add(control);
+
             foreach(Account account in Program.Settings.Accounts)
             {
                 AddAccount(account);
@@ -151,9 +156,9 @@ namespace PerkTVTracker
 
         private void RebuildGraphs()
         {
-            GraphType graphType = radioButton_allTime.Checked ? GraphType.AllTime :
-                radioButton_week.Checked ? GraphType.Week :
-                radioButton_today.Checked ? GraphType.Today : radioButton_lastSixHours.Checked ? 
+            GraphType graphType = allTimeToolStripMenuItem.Checked ? GraphType.AllTime :
+                weekToolStripMenuItem.Checked ? GraphType.Week :
+                todayToolStripMenuItem.Checked ? GraphType.Today : last6HoursToolStripMenuItem.Checked ? 
                 GraphType.LastSixHours : GraphType.LastHour;
             List<Series> series = new List<Series>();
             foreach (var kvp in Program.Settings.DataPoints)
@@ -175,9 +180,38 @@ namespace PerkTVTracker
             }
         }
 
-        private void radioButton_graphDisplay_CheckedChanged(object sender, EventArgs e)
+        private void graphDisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RebuildGraphs();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void hideSidebarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+
+            hideSidebarToolStripMenuItem.Text = splitContainer1.Panel1Collapsed ? "Show Sidebar" : "Hide Sidebar";
+            hideGraphToolStripMenuItem.Text = splitContainer1.Panel2Collapsed ? "Show Graph" : "Hide Graph";
+        }
+
+        private void hideGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            splitContainer1.SplitterDistance = 283;
+        }
+
+        private void splitContainer1_Panel2_ClientSizeChanged(object sender, EventArgs e)
+        {
+            hideSidebarToolStripMenuItem.Text = splitContainer1.Panel1Collapsed ? "Show Sidebar" : "Hide Sidebar";
+            hideGraphToolStripMenuItem.Text = splitContainer1.Panel2Collapsed ? "Show Graph" : "Hide Graph";
         }
     }
 }

@@ -15,6 +15,16 @@ namespace PerkTVTracker
         private Account _account;
         private Action<Account, SessionViewControl> _removeAccount;
         private Action _rebuildGraph;
+        private bool _initialized = false;
+
+        public SessionViewControl()
+        {
+            InitializeComponent();
+            comboBox1.Visible = false;
+            groupBox1.Text = "Total";
+            label_hourlyRate.Text = "Total Estimated Hourly Rate";
+            label_currentCount.Text = "Total Count";
+        }
 
         public SessionViewControl(Account account, Action<Account, SessionViewControl> removeAccount, Action rebuildGraph)
         {
@@ -25,17 +35,23 @@ namespace PerkTVTracker
 
             groupBox1.Text = _account.Email;
 
-            button_hideOnGraph.Text = _account.ShowOnGraph ? "Hide on graph" : "Show on graph";
+            comboBox1.Items[1] = _account.ShowOnGraph ? "Hide on graph" : "Show on graph";
+            comboBox1.SelectedIndex = 0;
+
+            _initialized = true;
         }
 
         public void UpdateDisplay(DataSummary summary)
         {
-            pointCount.Text = summary.PointCount.ToString("#,##0 points");
-            label_lifetimePointCount.Text = summary.LifetimePointCount.ToString("#,##0 points");
+            pointCount.Text = summary.PointCount.ToString("#,##0 pts");
+            if (summary.LifetimePointCount > 0)
+            {
+                pointCount.Text += summary.LifetimePointCount.ToString(" (of #,##0)");
+            }
 
             int hourlyRate = (int)Math.Round(summary.HourlyRate);
             string formattedHourly = hourlyRate.ToString("#,##0");
-            this.hourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, hourlyRate != 1 ? "points" : "point");
+            this.hourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, hourlyRate != 1 ? "pts" : "pt");
         }
 
         private void button_remove_Click(object sender, EventArgs e)
@@ -46,8 +62,17 @@ namespace PerkTVTracker
         private void button_hideOnGraph_Click(object sender, EventArgs e)
         {
             _account.ShowOnGraph = !_account.ShowOnGraph;
-            button_hideOnGraph.Text = _account.ShowOnGraph ? "Hide on graph" : "Show on graph";
+            comboBox1.Items[1] = _account.ShowOnGraph ? "Hide on graph" : "Show on graph";
             _rebuildGraph();
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0)
+                button_remove_Click(sender, e);
+            else
+                button_hideOnGraph_Click(sender, e);
+            comboBox1.SelectedIndex = 0;
         }
     }
 }

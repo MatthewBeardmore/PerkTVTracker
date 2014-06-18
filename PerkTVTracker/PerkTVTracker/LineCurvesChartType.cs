@@ -189,6 +189,8 @@ namespace PerkTVTracker
                 }
                 totalSeries.Color = _colorsBrightPastel[colorCntr];
                 chart1.Series.Add(totalSeries);
+
+                chart1.ChartAreas["Default"].RecalculateAxesScale();
             }
         }
     }
