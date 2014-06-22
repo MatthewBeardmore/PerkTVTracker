@@ -15,7 +15,6 @@ namespace PerkTVTracker
         private Account _account;
         private Action<Account, SessionViewControl> _removeAccount;
         private Action _rebuildGraph;
-        private bool _initialized = false;
 
         public SessionViewControl()
         {
@@ -37,8 +36,6 @@ namespace PerkTVTracker
 
             comboBox1.Items[1] = _account.ShowOnGraph ? "Hide on graph" : "Show on graph";
             comboBox1.SelectedIndex = 0;
-
-            _initialized = true;
         }
 
         public void UpdateDisplay(DataSummary summary)

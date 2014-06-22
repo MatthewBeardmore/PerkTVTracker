@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,6 +37,23 @@ namespace PerkTVTracker
             _displayTimer.Interval = (nextInterval - DateTime.Now).Milliseconds;
             _displayTimer.Tick += OnDisplayTimerTick;
             _displayTimer.Start();
+
+            HttpListenerManager httpServer = new HttpListenerManager(1);
+            httpServer.ProcessRequest += httpServer_ProcessRequest;
+            httpServer.Start(10000);
+        }
+
+        void httpServer_ProcessRequest(HttpListenerContext context)
+        {
+            using (HttpListenerResponse response = context.Response)
+            {
+                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(this.Width, this.Height);
+                Invoke(new Action(() =>
+                {
+                    this.DrawToBitmap(bmp, this.ClientRectangle);
+                }));
+                bmp.Save(response.OutputStream, ImageFormat.Bmp);
+            }
         }
 
         private void OnDisplayTimerTick(object sender, EventArgs e)
