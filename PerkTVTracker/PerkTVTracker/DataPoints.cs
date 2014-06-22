@@ -34,7 +34,7 @@ namespace PerkTVTracker
             _points.Add(summary);
         }
 
-        public List<Series> ConstructSeries(Account account, GraphType graphType)
+        public List<Series> ConstructSeries(Account account)
         {
             List<Series> allSeries = new List<Series>();
 
@@ -44,26 +44,18 @@ namespace PerkTVTracker
             DateTime lastDataPoint = DateTime.MinValue;
             foreach(DataSummary summary in Points)
             {
-                TimeSpan diff = now - summary.LastSampleTimestamp;
-                if (graphType == GraphType.AllTime ||
-                    (graphType == GraphType.Week && diff.TotalHours < (24.0 * 7)) ||
-                    (graphType == GraphType.Today && diff.TotalHours < 24.0) ||
-                    (graphType == GraphType.LastSixHours && diff.TotalHours < 6) ||
-                    (graphType == GraphType.LastHour && diff.TotalHours < 1.0))
+                TimeSpan diffFromLastPoint = summary.LastSampleTimestamp - lastDataPoint;
+
+                if (lastDataPoint != DateTime.MinValue && diffFromLastPoint.TotalMinutes > 5)
                 {
-                    TimeSpan diffFromLastPoint = summary.LastSampleTimestamp - lastDataPoint;
-
-                    if (lastDataPoint != DateTime.MinValue && diffFromLastPoint.TotalMinutes > 5)
-                    {
-                        //Start a new series so that we don't get a massive line connecting points 
-                        //  that are not next to each other
-                        allSeries.Add(series);
-                        series = CreateDefaultSeries(account.Email, allSeries.Count, false);
-                    }
-                    lastDataPoint = summary.LastSampleTimestamp;
-
-                    series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
+                    //Start a new series so that we don't get a massive line connecting points 
+                    //  that are not next to each other
+                    allSeries.Add(series);
+                    series = CreateDefaultSeries(account.Email, allSeries.Count, false);
                 }
+                lastDataPoint = summary.LastSampleTimestamp;
+
+                series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
             }
 
             allSeries.Add(series);

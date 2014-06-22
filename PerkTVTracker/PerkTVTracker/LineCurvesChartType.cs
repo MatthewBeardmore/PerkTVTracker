@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Collections.Generic;
@@ -139,23 +140,23 @@ namespace PerkTVTracker
 			Color.FromArgb(120, 147, 190)
 		};
 
-        public void SetSeries(List<Series> series)
+        public void SetSeries(List<Series> series, GraphType graphType)
         {
             int colorCntr = -1;
 
-            Dictionary<double, double> totalPoints = new Dictionary<double, double>();
+            Dictionary<DateTime, double> totalPoints = new Dictionary<DateTime, double>();
             chart1.Series.Clear();
             string lastTag = null;
             foreach(Series s in series)
             {
                 foreach(DataPoint point in s.Points)
                 {
-                    if (totalPoints.ContainsKey(point.XValue))
+                    if (totalPoints.ContainsKey(DateTime.FromOADate(point.XValue)))
                     {
-                        totalPoints[point.XValue] += point.YValues[0];
+                        totalPoints[DateTime.FromOADate(point.XValue)] += point.YValues[0];
                     }
                     else
-                        totalPoints.Add(point.XValue, point.YValues[0]);
+                        totalPoints.Add(DateTime.FromOADate(point.XValue), point.YValues[0]);
                 }
                 //Fix the color so that any derivative series match up with their other parts
                 if (lastTag != s.Tag.ToString())
@@ -169,13 +170,13 @@ namespace PerkTVTracker
             if(chart1.Series.Count > 1)
             {
                 colorCntr++;
-                double lastDataPoint = -1;
+                DateTime lastDataPoint = DateTime.MinValue;
                 Series totalSeries = DataPoints.CreateDefaultSeries("Total");
                 int cntr = 1;
 
-                foreach (KeyValuePair<double, double> kvp in totalPoints)
+                foreach (KeyValuePair<DateTime, double> kvp in totalPoints)
                 {
-                    if (lastDataPoint != -1 && (kvp.Key - lastDataPoint) > 0.01)
+                    if (lastDataPoint != DateTime.MinValue && (kvp.Key - lastDataPoint).TotalMinutes > 5)
                     {
                         //Start a new series so that we don't get a massive line connecting points 
                         //  that are not next to each other
@@ -190,8 +191,37 @@ namespace PerkTVTracker
                 totalSeries.Color = _colorsBrightPastel[colorCntr];
                 chart1.Series.Add(totalSeries);
 
-                chart1.ChartAreas["Default"].RecalculateAxesScale();
             }
+
+            if (graphType == GraphType.AllTime)
+            {
+                chart1.ChartAreas["Default"].AxisX.Minimum = totalPoints.Keys.Min().ToOADate();
+                chart1.ChartAreas["Default"].AxisX.Maximum = totalPoints.Keys.Max().ToOADate();
+            }
+            else
+            {
+                if (graphType == GraphType.Week)
+                    chart1.ChartAreas["Default"].AxisX.Minimum = DateTime.Now.AddDays(-7).ToOADate();
+                else if (graphType == GraphType.Today)
+                    chart1.ChartAreas["Default"].AxisX.Minimum = DateTime.Now.AddDays(-1).ToOADate();
+                else if (graphType == GraphType.LastSixHours)
+                    chart1.ChartAreas["Default"].AxisX.Minimum = DateTime.Now.AddHours(-6).ToOADate();
+                else if (graphType == GraphType.LastHour)
+                    chart1.ChartAreas["Default"].AxisX.Minimum = DateTime.Now.AddHours(-1).ToOADate();
+                chart1.ChartAreas["Default"].AxisX.Maximum = DateTime.Now.ToOADate();
+            }
+        }
+
+        public void GetMinMax(out DateTime minimum, out DateTime maximum)
+        {
+            minimum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Minimum);
+            maximum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Maximum);
+        }
+
+        public void SetMinMax(DateTime minimum, DateTime maximum)
+        {
+            chart1.ChartAreas["Default"].AxisX.Minimum = minimum.ToOADate();
+            chart1.ChartAreas["Default"].AxisX.Maximum = maximum.ToOADate();
         }
     }
 }

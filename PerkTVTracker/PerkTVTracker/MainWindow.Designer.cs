@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +48,16 @@
             this.pointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeTop10OfDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_previousTime = new System.Windows.Forms.Button();
+            this.button_nextTime = new System.Windows.Forms.Button();
+            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
+            this.comboBox_timeSpan = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -73,16 +76,6 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 552);
             this.flowLayoutPanel1.TabIndex = 19;
-            // 
-            // sessionViewControl1
-            // 
-            this.sessionViewControl1.Location = new System.Drawing.Point(3, 4);
-            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.sessionViewControl1.MaximumSize = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.MinimumSize = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.Name = "sessionViewControl1";
-            this.sessionViewControl1.Size = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -158,7 +151,7 @@
             this.allTimeToolStripMenuItem.CheckOnClick = true;
             this.allTimeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allTimeToolStripMenuItem.Name = "allTimeToolStripMenuItem";
-            this.allTimeToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.allTimeToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.allTimeToolStripMenuItem.Text = "All Time";
             this.allTimeToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
@@ -166,7 +159,7 @@
             // 
             this.weekToolStripMenuItem.CheckOnClick = true;
             this.weekToolStripMenuItem.Name = "weekToolStripMenuItem";
-            this.weekToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.weekToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.weekToolStripMenuItem.Text = "Week";
             this.weekToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
@@ -174,7 +167,7 @@
             // 
             this.todayToolStripMenuItem.CheckOnClick = true;
             this.todayToolStripMenuItem.Name = "todayToolStripMenuItem";
-            this.todayToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.todayToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.todayToolStripMenuItem.Text = "Today";
             this.todayToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
@@ -182,7 +175,7 @@
             // 
             this.last6HoursToolStripMenuItem.CheckOnClick = true;
             this.last6HoursToolStripMenuItem.Name = "last6HoursToolStripMenuItem";
-            this.last6HoursToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.last6HoursToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.last6HoursToolStripMenuItem.Text = "Last 6 Hours";
             this.last6HoursToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
@@ -190,7 +183,7 @@
             // 
             this.lastHourToolStripMenuItem.CheckOnClick = true;
             this.lastHourToolStripMenuItem.Name = "lastHourToolStripMenuItem";
-            this.lastHourToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.lastHourToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.lastHourToolStripMenuItem.Text = "Last Hour";
             this.lastHourToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
@@ -253,6 +246,16 @@
             this.removeTop10OfDataToolStripMenuItem.Text = "Remove Top 10% of data";
             this.removeTop10OfDataToolStripMenuItem.Click += new System.EventHandler(this.removeTop10OfDataToolStripMenuItem_Click);
             // 
+            // persistDataToolStripMenuItem
+            // 
+            this.persistDataToolStripMenuItem.Checked = true;
+            this.persistDataToolStripMenuItem.CheckOnClick = true;
+            this.persistDataToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.persistDataToolStripMenuItem.Name = "persistDataToolStripMenuItem";
+            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
+            this.persistDataToolStripMenuItem.Text = "Persist Data";
+            this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -270,24 +273,15 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.comboBox_timeSpan);
+            this.splitContainer1.Panel2.Controls.Add(this.button_nextTime);
+            this.splitContainer1.Panel2.Controls.Add(this.button_previousTime);
             this.splitContainer1.Panel2.Controls.Add(this.lineCurvesChartType);
             this.splitContainer1.Panel2.ClientSizeChanged += new System.EventHandler(this.splitContainer1_Panel2_ClientSizeChanged);
             this.splitContainer1.Size = new System.Drawing.Size(928, 552);
             this.splitContainer1.SplitterDistance = 255;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 23;
-            // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(0, 0);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(681, 552);
-            this.lineCurvesChartType.TabIndex = 18;
             // 
             // statusStrip1
             // 
@@ -314,15 +308,64 @@
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(87, 20);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
             // 
-            // persistDataToolStripMenuItem
+            // button_previousTime
             // 
-            this.persistDataToolStripMenuItem.Checked = true;
-            this.persistDataToolStripMenuItem.CheckOnClick = true;
-            this.persistDataToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.persistDataToolStripMenuItem.Name = "persistDataToolStripMenuItem";
-            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
-            this.persistDataToolStripMenuItem.Text = "Persist Data";
-            this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
+            this.button_previousTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_previousTime.Location = new System.Drawing.Point(598, 523);
+            this.button_previousTime.Name = "button_previousTime";
+            this.button_previousTime.Size = new System.Drawing.Size(28, 23);
+            this.button_previousTime.TabIndex = 19;
+            this.button_previousTime.Text = "<";
+            this.button_previousTime.UseVisualStyleBackColor = true;
+            this.button_previousTime.Click += new System.EventHandler(this.button_previousTime_Click);
+            // 
+            // button_nextTime
+            // 
+            this.button_nextTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_nextTime.Location = new System.Drawing.Point(632, 523);
+            this.button_nextTime.Name = "button_nextTime";
+            this.button_nextTime.Size = new System.Drawing.Size(28, 23);
+            this.button_nextTime.TabIndex = 20;
+            this.button_nextTime.Text = ">";
+            this.button_nextTime.UseVisualStyleBackColor = true;
+            this.button_nextTime.Click += new System.EventHandler(this.button_nextTime_Click);
+            // 
+            // sessionViewControl1
+            // 
+            this.sessionViewControl1.Location = new System.Drawing.Point(3, 4);
+            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.sessionViewControl1.MaximumSize = new System.Drawing.Size(275, 160);
+            this.sessionViewControl1.MinimumSize = new System.Drawing.Size(275, 160);
+            this.sessionViewControl1.Name = "sessionViewControl1";
+            this.sessionViewControl1.Size = new System.Drawing.Size(275, 160);
+            this.sessionViewControl1.TabIndex = 0;
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(0, 0);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(684, 515);
+            this.lineCurvesChartType.TabIndex = 18;
+            // 
+            // comboBox_timeSpan
+            // 
+            this.comboBox_timeSpan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_timeSpan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_timeSpan.FormattingEnabled = true;
+            this.comboBox_timeSpan.Items.AddRange(new object[] {
+            "30 Minutes",
+            "Hour",
+            "6 Hours",
+            "Day"});
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(471, 521);
+            this.comboBox_timeSpan.Name = "comboBox_timeSpan";
+            this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 28);
+            this.comboBox_timeSpan.TabIndex = 21;
             // 
             // MainWindow
             // 
@@ -380,6 +423,9 @@
         private System.Windows.Forms.ToolStripMenuItem removeTop10OfDataToolStripMenuItem;
         private SessionViewControl sessionViewControl1;
         private System.Windows.Forms.ToolStripMenuItem persistDataToolStripMenuItem;
+        private System.Windows.Forms.Button button_nextTime;
+        private System.Windows.Forms.Button button_previousTime;
+        private System.Windows.Forms.ComboBox comboBox_timeSpan;
     }
 }
 

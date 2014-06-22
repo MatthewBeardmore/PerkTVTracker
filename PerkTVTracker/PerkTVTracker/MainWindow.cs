@@ -78,7 +78,9 @@ namespace PerkTVTracker
         {
             showLifetimePointsToolStripMenuItem.Checked = !Program.Settings.HideLifetimePoints;
             persistDataToolStripMenuItem.Checked = !Program.Settings.ClearDataPointsOnStartup;
-            splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width;
+            comboBox_timeSpan.SelectedIndex = 1;
+            splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width + 6;
+
             foreach(Account account in Program.Settings.Accounts)
             {
                 AddAccount(account);
@@ -158,9 +160,9 @@ namespace PerkTVTracker
             foreach (var acc in Program.Settings.Accounts)
             {
                 if (acc.ShowOnGraph)
-                    series.AddRange(acc.DataPoints.ConstructSeries(acc, graphType));
+                    series.AddRange(acc.DataPoints.ConstructSeries(acc));
             }
-            lineCurvesChartType.SetSeries(series);
+            lineCurvesChartType.SetSeries(series, graphType);
         }
 
         private void button_add_Click(object sender, EventArgs e)
@@ -247,5 +249,48 @@ namespace PerkTVTracker
         {
             Program.Settings.ClearDataPointsOnStartup = !persistDataToolStripMenuItem.Checked;
         }
+
+        private void button_previousTime_Click(object sender, EventArgs e)
+        {
+            DateTime minimum, maximum;
+            lineCurvesChartType.GetMinMax(out minimum, out maximum);
+
+            minimum = AddTime(minimum, false, (TimeChangeEnum)comboBox_timeSpan.SelectedIndex);
+            maximum = AddTime(maximum, false, (TimeChangeEnum)comboBox_timeSpan.SelectedIndex);
+
+            lineCurvesChartType.SetMinMax(minimum, maximum);
+        }
+
+        private void button_nextTime_Click(object sender, EventArgs e)
+        {
+            DateTime minimum, maximum;
+            lineCurvesChartType.GetMinMax(out minimum, out maximum);
+
+            minimum = AddTime(minimum, true, (TimeChangeEnum)comboBox_timeSpan.SelectedIndex);
+            maximum = AddTime(maximum, true, (TimeChangeEnum)comboBox_timeSpan.SelectedIndex);
+
+            lineCurvesChartType.SetMinMax(minimum, maximum);
+        }
+
+        private DateTime AddTime(DateTime time, bool forward, TimeChangeEnum change)
+        {
+            if (change == TimeChangeEnum.Day)
+                return time.AddDays(1 * (forward ? 1 : -1));
+            if (change == TimeChangeEnum.Hour)
+                return time.AddHours(1 * (forward ? 1 : -1));
+            if (change == TimeChangeEnum.SixHours)
+                return time.AddHours(6 * (forward ? 1 : -1));
+            if (change == TimeChangeEnum.ThirtyMinutes)
+                return time.AddMinutes(30 * (forward ? 1 : -1));
+            return time;
+        }
+    }
+
+    public enum TimeChangeEnum
+    {
+        ThirtyMinutes,
+        Hour,
+        SixHours,
+        Day
     }
 }
