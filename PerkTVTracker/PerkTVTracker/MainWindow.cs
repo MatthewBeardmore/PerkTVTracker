@@ -23,7 +23,8 @@ namespace PerkTVTracker
         private Timer _sampleTimer = new Timer();
         private Timer _displayTimer = new Timer();
         private Dictionary<PerkSession, LinearDataProcessor> _sessions = new Dictionary<PerkSession, LinearDataProcessor>();
-        
+        private HttpListenerManager _httpServer;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,9 +39,9 @@ namespace PerkTVTracker
             _displayTimer.Tick += OnDisplayTimerTick;
             _displayTimer.Start();
 
-            HttpListenerManager httpServer = new HttpListenerManager(1);
-            httpServer.ProcessRequest += httpServer_ProcessRequest;
-            httpServer.Start(10000);
+            _httpServer = new HttpListenerManager(1);
+            _httpServer.ProcessRequest += httpServer_ProcessRequest;
+            _httpServer.Start(10000);
         }
 
         void httpServer_ProcessRequest(HttpListenerContext context)
@@ -232,6 +233,7 @@ namespace PerkTVTracker
         private void showLifetimePointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.Settings.HideLifetimePoints = !showLifetimePointsToolStripMenuItem.Checked;
+            Program.Settings.SaveSettings();
         }
 
         private void clearDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -241,6 +243,7 @@ namespace PerkTVTracker
                 acc.DataPoints.ClearPoints();
             }
             RebuildGraphs();
+            Program.Settings.SaveSettings();
         }
 
         private void removeTop10OfDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -261,11 +264,14 @@ namespace PerkTVTracker
                 foreach(DataSummary summary in pointsToRemove)
                     acc.DataPoints.RemovePoint(summary);
             }
+            RebuildGraphs();
+            Program.Settings.SaveSettings();
         }
 
         private void persistDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.Settings.ClearDataPointsOnStartup = !persistDataToolStripMenuItem.Checked;
+            Program.Settings.SaveSettings();
         }
 
         private void button_previousTime_Click(object sender, EventArgs e)
@@ -301,6 +307,36 @@ namespace PerkTVTracker
             if (change == TimeChangeEnum.ThirtyMinutes)
                 return time.AddMinutes(30 * (forward ? 1 : -1));
             return time;
+        }
+
+        private void button_removeData_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure you want to remove this data?", "Remove?", MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
+            {
+                DateTime minimum, maximum;
+                lineCurvesChartType.GetSelectionMinMax(out minimum, out maximum);
+                foreach (var acc in Program.Settings.Accounts)
+                {
+                    List<DataSummary> pointsToRemove = new List<DataSummary>();
+                    foreach (DataSummary summary in acc.DataPoints.Points)
+                    {
+                        if(summary.LastSampleTimestamp >= minimum && summary.LastSampleTimestamp <= maximum)
+                        {
+                            pointsToRemove.Add(summary);
+                        }
+                    }
+                    foreach (DataSummary summary in pointsToRemove)
+                        acc.DataPoints.RemovePoint(summary);
+                }
+                RebuildGraphs();
+                Program.Settings.SaveSettings();
+            }
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _httpServer.Stop();
         }
     }
 

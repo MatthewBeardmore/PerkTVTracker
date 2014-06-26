@@ -69,7 +69,7 @@ namespace PerkTVTracker
             chartArea1.Area3DStyle.Perspective = 9;
             chartArea1.Area3DStyle.Rotation = 25;
             chartArea1.Area3DStyle.WallWidth = 3;
-            chartArea1.AxisX.ScaleView.Zoomable = true;
+            chartArea1.AxisX.ScaleView.Zoomable = false;
             chartArea1.AxisX.ScrollBar.Enabled = true;
             chartArea1.AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.All;
             chartArea1.AxisX.ScaleView.SizeType = DateTimeIntervalType.Hours;
@@ -216,6 +216,12 @@ namespace PerkTVTracker
         {
             minimum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Minimum);
             maximum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Maximum);
+        }
+
+        public void GetSelectionMinMax(out DateTime minimum, out DateTime maximum)
+        {
+            minimum = DateTime.FromOADate(chart1.ChartAreas["Default"].CursorX.SelectionStart);
+            maximum = DateTime.FromOADate(chart1.ChartAreas["Default"].CursorX.SelectionEnd);
         }
 
         public void SetMinMax(DateTime minimum, DateTime maximum)
