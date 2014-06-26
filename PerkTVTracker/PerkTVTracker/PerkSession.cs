@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -14,15 +15,43 @@ namespace PerkTVTracker
     public class PerkSession
     {
         [XmlIgnore]
-        public CookieCollection _cookies;
+        private CookieCollection _cookies;
 
-        /*public string XmlCookies
+        public string XmlCookies
         {
             get
             {
-                BinarySerializer
+                BinaryFormatter formater = new BinaryFormatter();
+                using(MemoryStream stream = new MemoryStream())
+                {
+                    formater.Serialize(stream, _cookies);
+                    return Convert.ToBase64String(stream.ToArray());
+                }
             }
-        }*/
+            set
+            {
+                BinaryFormatter formater = new BinaryFormatter();
+                using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(value)))
+                {
+                    _cookies = (CookieCollection)formater.Deserialize(stream);
+                }
+            }
+        }
+
+        public bool HasCookies
+        { 
+            get 
+            { 
+                if(_cookies == null)
+                    return false;
+                foreach(Cookie cookie in _cookies)
+                {
+                    if (cookie.Expired)
+                        return false;
+                }
+                return true;
+            } 
+        }
 
         public PerkSession() { }
 

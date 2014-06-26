@@ -172,7 +172,8 @@ namespace PerkTVTracker
             SessionViewControl control = new SessionViewControl(account, RemoveAccount, RebuildGraphs);
             flowLayoutPanel1.Controls.Add(control);
 
-            account.Session = PerkLogInAgent.Login(account);
+            if (account.Session == null || !account.Session.HasCookies)
+                account.Session = PerkLogInAgent.Login(account);
         }
 
         private void RemoveAccount(Account account, SessionViewControl control)
