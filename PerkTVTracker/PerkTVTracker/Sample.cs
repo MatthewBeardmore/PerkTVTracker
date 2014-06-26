@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace PerkTVTracker
 {
-    public struct Sample
+    [Serializable]
+    public class Sample
     {
+        public Sample() { }
+
         public Sample(int pointCount, int lifetimePointCount, DateTime time)
         {
             PointCount = pointCount;

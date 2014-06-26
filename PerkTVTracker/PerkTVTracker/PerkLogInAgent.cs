@@ -28,7 +28,7 @@ namespace PerkTVTracker
 
             using (var resp = req.GetResponse() as HttpWebResponse)
             {
-                return new PerkSession(new CookieCollection() { resp.Cookies }, account);
+                return new PerkSession(new CookieCollection() { resp.Cookies });
             }
         }
     }

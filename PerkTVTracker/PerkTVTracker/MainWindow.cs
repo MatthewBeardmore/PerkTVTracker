@@ -22,7 +22,6 @@ namespace PerkTVTracker
         private Random _generator = new Random();
         private Timer _sampleTimer = new Timer();
         private Timer _displayTimer = new Timer();
-        private Dictionary<PerkSession, LinearDataProcessor> _sessions = new Dictionary<PerkSession, LinearDataProcessor>();
         private HttpListenerManager _httpServer;
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
@@ -111,9 +110,9 @@ namespace PerkTVTracker
             double allHourlyRate = 0;
             int numSecondsTilNextSample = 0;
 
-            foreach (KeyValuePair<PerkSession, LinearDataProcessor> kvp in _sessions)
+            foreach (Account account in Program.Settings.Accounts)
             {
-                DataSummary summary = kvp.Value.GetDataSummary();
+                DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
                 (flowLayoutPanel1.Controls[cnt] as SessionViewControl).UpdateDisplay(summary);
 
@@ -147,6 +146,11 @@ namespace PerkTVTracker
             comboBox_timeSpan.SelectedIndex = 1;
             splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width + 6;
 
+            if(Program.Settings.GraphMinimum != DateTime.MinValue)
+            {
+                lineCurvesChartType.SetMinMax(Program.Settings.GraphMinimum, Program.Settings.GraphMaximum);
+                SetGraphType(Program.Settings.GraphType);
+            }
 
             if(Program.Settings.LastWindowSize.Width != 0 && Program.Settings.LastWindowSize.Height != 0)
             {
@@ -168,13 +172,12 @@ namespace PerkTVTracker
             SessionViewControl control = new SessionViewControl(account, RemoveAccount, RebuildGraphs);
             flowLayoutPanel1.Controls.Add(control);
 
-            _sessions.Add(PerkLogInAgent.Login(account), new LinearDataProcessor() { SampleAgeLimit = new TimeSpan(1, 0, 0) });
+            account.Session = PerkLogInAgent.Login(account);
         }
 
         private void RemoveAccount(Account account, SessionViewControl control)
         {
             flowLayoutPanel1.Controls.Remove(control);
-            _sessions.Remove(_sessions.FirstOrDefault((kvp) => kvp.Key._account == account).Key);
             Program.Settings.RemoveAccount(account);
         }
 
@@ -187,18 +190,18 @@ namespace PerkTVTracker
         {
             double allHourlyRate = 0;
             DateTime sampleTime = DateTime.Now;
-            foreach(KeyValuePair<PerkSession, LinearDataProcessor> kvp in _sessions)
+            foreach(Account account in Program.Settings.Accounts)
             {
                 try
                 {
-                    KeyValuePair<int, int> pointCount = await kvp.Key.GetCurrentPointCount();
-                    kvp.Value.AddSample(pointCount.Key, pointCount.Value, sampleTime);
+                    KeyValuePair<int, int> pointCount = await account.Session.GetCurrentPointCount();
+                    account.LinearDataProcessor.AddSample(pointCount.Key, pointCount.Value, sampleTime);
 
-                    DataSummary summary = kvp.Value.GetDataSummary();
+                    DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
                     if (summary.HourlyRate != 0 && updateGraph)
                     {
-                        DataPoints points = Program.Settings.GetDataPointsForAccount(kvp.Key._account);
+                        DataPoints points = Program.Settings.GetDataPointsForAccount(account);
                         points.AddPoint(summary);
                     }
 
@@ -210,6 +213,14 @@ namespace PerkTVTracker
             Program.Settings.LastWindowState = WindowState;
             Program.Settings.LastWindowSize = Size;
             Program.Settings.LastWindowLocation = Location;
+
+            DateTime minimum, maximum;
+            lineCurvesChartType.GetMinMax(out minimum, out maximum);
+
+            Program.Settings.GraphMinimum = minimum;
+            Program.Settings.GraphMaximum = maximum;
+            Program.Settings.GraphType = GetGraphType();
+
             Program.Settings.SaveSettings();
 
 
@@ -229,10 +240,7 @@ namespace PerkTVTracker
 
         private void RebuildGraphs()
         {
-            GraphType graphType = allTimeToolStripMenuItem.Checked ? GraphType.AllTime :
-                weekToolStripMenuItem.Checked ? GraphType.Week :
-                todayToolStripMenuItem.Checked ? GraphType.Today : last6HoursToolStripMenuItem.Checked ? 
-                GraphType.LastSixHours : GraphType.LastHour;
+            GraphType graphType = GetGraphType();
             List<Series> series = new List<Series>();
             foreach (var acc in Program.Settings.Accounts)
             {
@@ -240,6 +248,36 @@ namespace PerkTVTracker
                     series.AddRange(acc.DataPoints.ConstructSeries(acc));
             }
             lineCurvesChartType.SetSeries(series, graphType);
+        }
+
+        private GraphType GetGraphType()
+        {
+            return allTimeToolStripMenuItem.Checked ? GraphType.AllTime :
+                weekToolStripMenuItem.Checked ? GraphType.Week :
+                todayToolStripMenuItem.Checked ? GraphType.Today : last6HoursToolStripMenuItem.Checked ?
+                GraphType.LastSixHours : GraphType.LastHour;
+        }
+
+        private void SetGraphType(GraphType type)
+        {
+            switch(type)
+            {
+                case GraphType.AllTime:
+                    graphDisplayToolStripMenuItem_Click(allTimeToolStripMenuItem, EventArgs.Empty);
+                    break;
+                case GraphType.LastHour:
+                    graphDisplayToolStripMenuItem_Click(lastHourToolStripMenuItem, EventArgs.Empty);
+                    break;
+                case GraphType.LastSixHours:
+                    graphDisplayToolStripMenuItem_Click(last6HoursToolStripMenuItem, EventArgs.Empty);
+                    break;
+                case GraphType.Today:
+                    graphDisplayToolStripMenuItem_Click(todayToolStripMenuItem, EventArgs.Empty);
+                    break;
+                case GraphType.Week:
+                    graphDisplayToolStripMenuItem_Click(weekToolStripMenuItem, EventArgs.Empty);
+                    break;
+            }
         }
 
         private void button_add_Click(object sender, EventArgs e)
@@ -406,9 +444,9 @@ namespace PerkTVTracker
 
         private void clearSamplesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (LinearDataProcessor processor in _sessions.Values)
+            foreach (Account acc in Program.Settings.Accounts)
             {
-                processor.ClearSamples();
+                acc.LinearDataProcessor.ClearSamples();
             }
         }
     }

@@ -6,19 +6,29 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace PerkTVTracker
 {
     [Serializable]
     public class PerkSession
     {
+        [XmlIgnore]
         public CookieCollection _cookies;
-        public Account _account;
 
-        internal PerkSession(CookieCollection sessionData, Account account)
+        /*public string XmlCookies
+        {
+            get
+            {
+                BinarySerializer
+            }
+        }*/
+
+        public PerkSession() { }
+
+        internal PerkSession(CookieCollection sessionData)
         {
             _cookies = sessionData;
-            _account = account;
         }
 
         public async Task<KeyValuePair<int, int>> GetCurrentPointCount()

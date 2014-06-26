@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace PerkTVTracker
 {
+    [Serializable]
     public class LinearDataProcessor
     {
         private List<Sample> _samples = new List<Sample>();
+
+        public List<Sample> Samples
+        {
+            get { return _samples; }
+            set { _samples = value; }
+        }
 
         public TimeSpan SampleAgeLimit { get; set; }
 

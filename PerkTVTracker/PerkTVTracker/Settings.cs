@@ -62,6 +62,24 @@ namespace PerkTVTracker
             set;
         }
 
+        public DateTime GraphMinimum
+        {
+            get;
+            set;
+        }
+
+        public DateTime GraphMaximum
+        {
+            get;
+            set;
+        }
+
+        public GraphType GraphType
+        {
+            get;
+            set;
+        }
+
         public Settings()
         {
             MinimizeToTray = true;
