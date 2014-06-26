@@ -195,8 +195,11 @@ namespace PerkTVTracker
 
             if (graphType == GraphType.AllTime)
             {
-                chart1.ChartAreas["Default"].AxisX.Minimum = totalPoints.Keys.Min().ToOADate();
-                chart1.ChartAreas["Default"].AxisX.Maximum = totalPoints.Keys.Max().ToOADate();
+                if (totalPoints.Count > 0)
+                {
+                    chart1.ChartAreas["Default"].AxisX.Minimum = totalPoints.Keys.Min().ToOADate();
+                    chart1.ChartAreas["Default"].AxisX.Maximum = totalPoints.Keys.Max().ToOADate();
+                }
             }
             else
             {
