@@ -24,6 +24,9 @@ namespace PerkTVTracker
         private Timer _displayTimer = new Timer();
         private Dictionary<PerkSession, LinearDataProcessor> _sessions = new Dictionary<PerkSession, LinearDataProcessor>();
         private HttpListenerManager _httpServer;
+        private NotifyIcon trayIcon;
+        private ContextMenu trayMenu;
+        private FormWindowState windowState;
 
         public MainWindow()
         {
@@ -42,7 +45,50 @@ namespace PerkTVTracker
             _httpServer = new HttpListenerManager(1);
             _httpServer.ProcessRequest += httpServer_ProcessRequest;
             _httpServer.Start(10000);
+
+            // Create a simple tray menu with only one item.
+            trayMenu = new ContextMenu();
+            trayMenu.MenuItems.Add("Show", OnShow);
+            trayMenu.MenuItems.Add("Exit", OnExit);
+
+            // Create a tray icon. In this example we use a
+            // standard system icon for simplicity, but you
+            // can of course use your own custom icon too.
+            trayIcon = new NotifyIcon();
+            trayIcon.Text = "Perk TV Tracker";
+            trayIcon.Icon = Icon.FromHandle(PerkTVTracker.Properties.Resources.perkLogoSmall.GetHicon());
+            trayIcon.Click += OnShow;
+
+            // Add menu to tray icon and show it.
+            trayIcon.ContextMenu = trayMenu;
+            trayIcon.Visible = true;
         }
+
+        #region System Tray code
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void OnShow(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = windowState;
+        }
+
+        private void MainWindow_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                if (Program.Settings.MinimizeToTray)
+                    this.Hide();
+            }
+            else
+                windowState = WindowState;
+        }
+
+        #endregion
 
         void httpServer_ProcessRequest(HttpListenerContext context)
         {
@@ -96,9 +142,18 @@ namespace PerkTVTracker
         private void OnFormShown(object sender, EventArgs e)
         {
             showLifetimePointsToolStripMenuItem.Checked = !Program.Settings.HideLifetimePoints;
+            minimizeToTrayToolStripMenuItem.Checked = Program.Settings.MinimizeToTray;
             persistDataToolStripMenuItem.Checked = !Program.Settings.ClearDataPointsOnStartup;
             comboBox_timeSpan.SelectedIndex = 1;
             splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width + 6;
+
+
+            if(Program.Settings.LastWindowSize.Width != 0 && Program.Settings.LastWindowSize.Height != 0)
+            {
+                Location = Program.Settings.LastWindowLocation;
+                Size = Program.Settings.LastWindowSize;
+                WindowState = Program.Settings.LastWindowState;
+            }
 
             foreach(Account account in Program.Settings.Accounts)
             {
@@ -152,6 +207,9 @@ namespace PerkTVTracker
                 catch { }//We just won't have a data point here
             }
 
+            Program.Settings.LastWindowState = WindowState;
+            Program.Settings.LastWindowSize = Size;
+            Program.Settings.LastWindowLocation = Location;
             Program.Settings.SaveSettings();
 
 
@@ -337,6 +395,12 @@ namespace PerkTVTracker
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             _httpServer.Stop();
+        }
+
+        private void minimizeToTrayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.Settings.MinimizeToTray = !Program.Settings.MinimizeToTray;
+            Program.Settings.SaveSettings();
         }
     }
 

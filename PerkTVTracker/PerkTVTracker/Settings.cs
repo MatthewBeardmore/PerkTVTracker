@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -31,10 +32,39 @@ namespace PerkTVTracker
             set;
         }
 
+        public bool MinimizeToTray
+        {
+            get;
+            set;
+        }
+
         public bool ClearDataPointsOnStartup
         {
             get;
             set;
+        }
+
+        public System.Windows.Forms.FormWindowState LastWindowState
+        {
+            get;
+            set;
+        }
+
+        public Size LastWindowSize
+        {
+            get;
+            set;
+        }
+
+        public Point LastWindowLocation
+        {
+            get;
+            set;
+        }
+
+        public Settings()
+        {
+            MinimizeToTray = true;
         }
 
         public void AddAccount(Account account)
