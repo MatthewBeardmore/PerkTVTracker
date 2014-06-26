@@ -425,6 +425,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
+            this.LocationChanged += new System.EventHandler(this.MainWindow_Resize);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
