@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,28 +60,17 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
             this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
-            this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel1.Controls.Add(this.sessionViewControl1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 552);
-            this.flowLayoutPanel1.TabIndex = 19;
             // 
             // menuStrip1
             // 
@@ -293,14 +281,13 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(12, 27);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel1.ClientSizeChanged += new System.EventHandler(this.splitContainer1_Panel2_ClientSizeChanged);
             // 
             // splitContainer1.Panel2
@@ -313,7 +300,6 @@
             this.splitContainer1.Panel2.ClientSizeChanged += new System.EventHandler(this.splitContainer1_Panel2_ClientSizeChanged);
             this.splitContainer1.Size = new System.Drawing.Size(928, 552);
             this.splitContainer1.SplitterDistance = 255;
-            this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 23;
             // 
             // button_removeData
@@ -337,7 +323,7 @@
             "Hour",
             "6 Hours",
             "Day"});
-            this.comboBox_timeSpan.Location = new System.Drawing.Point(480, 523);
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(477, 523);
             this.comboBox_timeSpan.Name = "comboBox_timeSpan";
             this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 23);
             this.comboBox_timeSpan.TabIndex = 21;
@@ -345,7 +331,7 @@
             // button_nextTime
             // 
             this.button_nextTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_nextTime.Location = new System.Drawing.Point(641, 523);
+            this.button_nextTime.Location = new System.Drawing.Point(638, 523);
             this.button_nextTime.Name = "button_nextTime";
             this.button_nextTime.Size = new System.Drawing.Size(28, 23);
             this.button_nextTime.TabIndex = 20;
@@ -356,7 +342,7 @@
             // button_previousTime
             // 
             this.button_previousTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_previousTime.Location = new System.Drawing.Point(607, 523);
+            this.button_previousTime.Location = new System.Drawing.Point(604, 523);
             this.button_previousTime.Name = "button_previousTime";
             this.button_previousTime.Size = new System.Drawing.Size(28, 23);
             this.button_previousTime.TabIndex = 19;
@@ -389,14 +375,29 @@
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(68, 17);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.sessionViewControl1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(255, 466);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
             // sessionViewControl1
             // 
             this.sessionViewControl1.AutoSize = true;
             this.sessionViewControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.sessionViewControl1.Location = new System.Drawing.Point(3, 4);
-            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.sessionViewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sessionViewControl1.Location = new System.Drawing.Point(2, 2);
+            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(2);
             this.sessionViewControl1.Name = "sessionViewControl1";
-            this.sessionViewControl1.Size = new System.Drawing.Size(219, 104);
+            this.sessionViewControl1.Size = new System.Drawing.Size(251, 110);
             this.sessionViewControl1.TabIndex = 0;
             // 
             // lineCurvesChartType
@@ -406,13 +407,13 @@
             this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lineCurvesChartType.Location = new System.Drawing.Point(0, 0);
             this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(672, 517);
+            this.lineCurvesChartType.Size = new System.Drawing.Size(669, 517);
             this.lineCurvesChartType.TabIndex = 18;
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(952, 604);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
@@ -426,17 +427,16 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,7 +445,6 @@
         #endregion
 
         private LineCurvesChartType lineCurvesChartType;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -478,6 +477,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem minimizeToTrayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearSamplesToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 

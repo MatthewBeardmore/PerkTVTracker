@@ -46,12 +46,13 @@
             this.groupBox1.AutoSize = true;
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(2, 2);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(235, 99);
+            this.groupBox1.Size = new System.Drawing.Size(235, 104);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "email@mail.com";
@@ -76,7 +77,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(231, 81);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(231, 86);
             this.tableLayoutPanel2.TabIndex = 8;
             // 
             // label_currentCount
@@ -135,7 +136,7 @@
             this.hourlyRate.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hourlyRate.ForeColor = System.Drawing.Color.Black;
             this.hourlyRate.Location = new System.Drawing.Point(2, 56);
-            this.hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 5);
             this.hourlyRate.Name = "hourlyRate";
             this.hourlyRate.Size = new System.Drawing.Size(128, 25);
             this.hourlyRate.TabIndex = 5;
@@ -153,7 +154,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 103);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 108);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // SessionViewControl
@@ -166,7 +167,7 @@
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SessionViewControl";
-            this.Size = new System.Drawing.Size(239, 103);
+            this.Size = new System.Drawing.Size(239, 108);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);

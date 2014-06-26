@@ -160,7 +160,7 @@ namespace PerkTVTracker
             {
                 DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
-                (flowLayoutPanel1.Controls[cnt] as SessionViewControl).UpdateDisplay(summary);
+                (tableLayoutPanel1.Controls[cnt] as SessionViewControl).UpdateDisplay(summary);
 
                 if (numSecondsTilNextSample == 0)
                     numSecondsTilNextSample = (int)Math.Round((summary.LastSampleTimestamp.AddMilliseconds(_sampleTimer.Interval) -
@@ -187,7 +187,7 @@ namespace PerkTVTracker
                 PointCount = allPointCount,
                 LifetimePointCount = allLifetimePointCount
             };
-            (flowLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
+            (tableLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
         }
 
         private void OnFormShown(object sender, EventArgs e)
@@ -196,8 +196,6 @@ namespace PerkTVTracker
             minimizeToTrayToolStripMenuItem.Checked = Program.Settings.MinimizeToTray;
             persistDataToolStripMenuItem.Checked = !Program.Settings.ClearDataPointsOnStartup;
             comboBox_timeSpan.SelectedIndex = 1;
-            splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width + 6;
-
             if(Program.Settings.GraphMinimum != DateTime.MinValue)
             {
                 lineCurvesChartType.SetMinMax(Program.Settings.GraphMinimum, Program.Settings.GraphMaximum);
@@ -223,7 +221,10 @@ namespace PerkTVTracker
         private void AddAccount(Account account)
         {
             SessionViewControl control = new SessionViewControl(account, RemoveAccount, RebuildGraphs);
-            flowLayoutPanel1.Controls.Add(control);
+            control.Dock = DockStyle.Fill;
+            control.AutoSize = true;
+            control.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.Controls.Add(control);
 
             if (account.Session == null || !account.Session.HasCookies)
                 account.Session = PerkLogInAgent.Login(account);
@@ -231,7 +232,7 @@ namespace PerkTVTracker
 
         private void RemoveAccount(Account account, SessionViewControl control)
         {
-            flowLayoutPanel1.Controls.Remove(control);
+            tableLayoutPanel1.Controls.Remove(control);
             Program.Settings.RemoveAccount(account);
         }
 
