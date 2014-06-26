@@ -79,5 +79,10 @@ namespace PerkTVTracker
 
             _samples.RemoveRange(0, i);
         }
+
+        public void ClearSamples()
+        {
+            _samples.Clear();
+        }
     }
 }

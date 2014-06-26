@@ -395,12 +395,21 @@ namespace PerkTVTracker
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             _httpServer.Stop();
+            trayIcon.Visible = false;
         }
 
         private void minimizeToTrayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.Settings.MinimizeToTray = !Program.Settings.MinimizeToTray;
             Program.Settings.SaveSettings();
+        }
+
+        private void clearSamplesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (LinearDataProcessor processor in _sessions.Values)
+            {
+                processor.ClearSamples();
+            }
         }
     }
 

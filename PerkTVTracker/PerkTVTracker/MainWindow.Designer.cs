@@ -58,10 +58,11 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.minimizeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
+            this.clearSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -233,7 +234,8 @@
             this.pointsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearDataToolStripMenuItem,
             this.removeTop10OfDataToolStripMenuItem,
-            this.persistDataToolStripMenuItem});
+            this.persistDataToolStripMenuItem,
+            this.clearSamplesToolStripMenuItem});
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
             this.pointsToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
             this.pointsToolStripMenuItem.Text = "Points";
@@ -363,6 +365,21 @@
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(87, 20);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(213, 6);
+            // 
+            // minimizeToTrayToolStripMenuItem
+            // 
+            this.minimizeToTrayToolStripMenuItem.Checked = true;
+            this.minimizeToTrayToolStripMenuItem.CheckOnClick = true;
+            this.minimizeToTrayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.minimizeToTrayToolStripMenuItem.Name = "minimizeToTrayToolStripMenuItem";
+            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.minimizeToTrayToolStripMenuItem.Text = "Minimize to Tray";
+            this.minimizeToTrayToolStripMenuItem.Click += new System.EventHandler(this.minimizeToTrayToolStripMenuItem_Click);
+            // 
             // sessionViewControl1
             // 
             this.sessionViewControl1.Location = new System.Drawing.Point(3, 4);
@@ -385,20 +402,12 @@
             this.lineCurvesChartType.Size = new System.Drawing.Size(693, 515);
             this.lineCurvesChartType.TabIndex = 18;
             // 
-            // toolStripSeparator3
+            // clearSamplesToolStripMenuItem
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(213, 6);
-            // 
-            // minimizeToTrayToolStripMenuItem
-            // 
-            this.minimizeToTrayToolStripMenuItem.Checked = true;
-            this.minimizeToTrayToolStripMenuItem.CheckOnClick = true;
-            this.minimizeToTrayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.minimizeToTrayToolStripMenuItem.Name = "minimizeToTrayToolStripMenuItem";
-            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
-            this.minimizeToTrayToolStripMenuItem.Text = "Minimize to Tray";
-            this.minimizeToTrayToolStripMenuItem.Click += new System.EventHandler(this.minimizeToTrayToolStripMenuItem_Click);
+            this.clearSamplesToolStripMenuItem.Name = "clearSamplesToolStripMenuItem";
+            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
+            this.clearSamplesToolStripMenuItem.Text = "Clear Samples";
+            this.clearSamplesToolStripMenuItem.Click += new System.EventHandler(this.clearSamplesToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -465,6 +474,7 @@
         private System.Windows.Forms.Button button_removeData;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem minimizeToTrayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearSamplesToolStripMenuItem;
     }
 }
 
