@@ -217,6 +217,13 @@ namespace PerkTVTracker
 
         public void GetMinMax(out DateTime minimum, out DateTime maximum)
         {
+            if(double.IsNaN(chart1.ChartAreas["Default"].AxisX.Minimum) ||
+                double.IsNaN(chart1.ChartAreas["Default"].AxisX.Maximum))
+            {
+                minimum = DateTime.MinValue;
+                maximum = DateTime.MinValue;
+                return;
+            }
             minimum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Minimum);
             maximum = DateTime.FromOADate(chart1.ChartAreas["Default"].AxisX.Maximum);
         }
