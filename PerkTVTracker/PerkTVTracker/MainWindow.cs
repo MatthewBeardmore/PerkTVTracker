@@ -126,6 +126,12 @@ namespace PerkTVTracker
                 cnt++;
             }
 
+            if (numSecondsTilNextSample < 0)
+            {
+                numSecondsTilNextSample = 0;
+                OnSampleTimerTick(_sampleTimer, EventArgs.Empty);
+            }
+
             nextSampletoolStripStatusLabel.Text = numSecondsTilNextSample + (numSecondsTilNextSample != 1 ? " seconds" : " second");
 
             int totalHourlyRateAmt = (int)Math.Round(allHourlyRate);
