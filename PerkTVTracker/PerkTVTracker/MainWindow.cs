@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Serialization;
 
 namespace PerkTVTracker
 {
@@ -93,12 +94,50 @@ namespace PerkTVTracker
         {
             using (HttpListenerResponse response = context.Response)
             {
-                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(this.Width, this.Height);
-                Invoke(new Action(() =>
+                if (context.Request.Url.LocalPath == "/app")
                 {
-                    this.DrawToBitmap(bmp, this.ClientRectangle);
-                }));
-                bmp.Save(response.OutputStream, ImageFormat.Bmp);
+                    AppData appData = new AppData();
+                    appData.Accounts = new List<AccountData>();
+                    int allPointCount = 0;
+                    int allLifetimePointCount = 0;
+                    double allHourlyRate = 0;
+                    foreach(Account account in Program.Settings.Accounts)
+                    {
+                        DataSummary summary = account.LinearDataProcessor.GetDataSummary();
+
+                        appData.Accounts.Add(new AccountData()
+                        {
+                            Email = account.Email,
+                            CurrentPoints = summary.PointCount,
+                            LifetimePoints = summary.LifetimePointCount,
+                            EstimatedHourlyRate = summary.HourlyRate
+                        });
+
+                        allPointCount += summary.PointCount;
+                        allLifetimePointCount += summary.LifetimePointCount;
+                        allHourlyRate += summary.HourlyRate;
+                    }
+
+                    int totalHourlyRateAmt = (int)Math.Round(allHourlyRate);
+                    appData.Total = new AccountData()
+                    {
+                        CurrentPoints = allPointCount,
+                        LifetimePoints = allLifetimePointCount,
+                        EstimatedHourlyRate = totalHourlyRateAmt
+                    };
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(AppData));
+                    serializer.Serialize(response.OutputStream, appData);
+                }
+                else
+                {
+                    System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(this.Width, this.Height);
+                    Invoke(new Action(() =>
+                    {
+                        this.DrawToBitmap(bmp, this.ClientRectangle);
+                    }));
+                    bmp.Save(response.OutputStream, ImageFormat.Bmp);
+                }
             }
         }
 

@@ -64,6 +64,7 @@
     <Compile Include="AddAccount.Designer.cs">
       <DependentUpon>AddAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppData.cs" />
     <Compile Include="DataPoints.cs" />
     <Compile Include="DataSummary.cs" />
     <Compile Include="GraphType.cs" />

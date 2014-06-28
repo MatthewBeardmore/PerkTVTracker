@@ -5,16 +5,56 @@ VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerkTVTracker", "PerkTVTracker\PerkTVTracker.csproj", "{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerkTVTracker.WindowsPhone", "PerkTVTracker.WindowsPhone\PerkTVTracker.WindowsPhone.csproj", "{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PerkTVTracker.Shared", "PerkTVTracker.Shared\PerkTVTracker.Shared.shproj", "{B6C47454-7866-4F22-A725-EC8CE1CF42BA}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PerkTVTracker.Shared\PerkTVTracker.Shared.projitems*{d71e16fd-27c6-4bc5-ad44-346e6ec85f55}*SharedItemsImports = 4
+		PerkTVTracker.Shared\App1.Shared.projitems*{b6c47454-7866-4f22-a725-ec8ce1cf42ba}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Release|x64.ActiveCfg = Release|Any CPU
+		{BAF2DD1B-0602-4EC5-B1FC-A9D4163ABBC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|ARM.ActiveCfg = Debug|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|ARM.Build.0 = Debug|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|ARM.Deploy.0 = Debug|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|x86.ActiveCfg = Debug|x86
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|x86.Build.0 = Debug|x86
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Debug|x86.Deploy.0 = Debug|x86
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|ARM.ActiveCfg = Release|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|ARM.Build.0 = Release|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|ARM.Deploy.0 = Release|ARM
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|x64.ActiveCfg = Release|Any CPU
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|x86.ActiveCfg = Release|x86
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|x86.Build.0 = Release|x86
+		{D71E16FD-27C6-4BC5-AD44-346E6EC85F55}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
