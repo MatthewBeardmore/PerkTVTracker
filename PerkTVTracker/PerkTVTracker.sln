@@ -12,7 +12,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PerkTVTracker.Shared\PerkTVTracker.Shared.projitems*{d71e16fd-27c6-4bc5-ad44-346e6ec85f55}*SharedItemsImports = 4
-		PerkTVTracker.Shared\App1.Shared.projitems*{b6c47454-7866-4f22-a725-ec8ce1cf42ba}*SharedItemsImports = 13
+		PerkTVTracker.Shared\PerkTVTracker.Shared.projitems*{b6c47454-7866-4f22-a725-ec8ce1cf42ba}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

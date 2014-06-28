@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpServer;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HttpListener = HttpServer.HttpListener;
 
 namespace PerkTVTracker
 {
@@ -15,11 +17,10 @@ namespace PerkTVTracker
         // 1229 - An operation was attempted on a nonexistent network connection
         // 995  - The I/O operation has been aborted because of either a thread exit or an application request.
         public static readonly int[] IGNORE_ERROR_CODES = new int[3] { 64, 1229, 995 };
-        private readonly HttpListener _listener;
-        private readonly Thread _listenerThread;
+        private HttpListener _listener;
         private readonly Thread[] _workers;
-        private ConcurrentQueue<HttpListenerContext> _queue;
-        public event Action<HttpListenerContext> ProcessRequest;
+        private ConcurrentQueue<KeyValuePair<IHttpClientContext, IHttpRequest>> _queue;
+        public event Action<IHttpClientContext, IHttpRequest> ProcessRequest;
         private ManualResetEvent _newQueueItem = new ManualResetEvent(false), _listenForNextRequest = new ManualResetEvent(false);
         private bool _isRunning = false;
         private int _lockedQueue = 0;
@@ -27,23 +28,30 @@ namespace PerkTVTracker
         public HttpListenerManager(uint maxThreads)
         {
             _workers = new Thread[maxThreads];
-            _queue = new ConcurrentQueue<HttpListenerContext>();
-            _listener = new HttpListener();
-            _listenerThread = new Thread(HandleRequests);
+            _queue = new ConcurrentQueue<KeyValuePair<IHttpClientContext, IHttpRequest>>();
         }
 
         public void Start(uint port)
         {
             _isRunning = true;
-            _listener.Prefixes.Add(String.Format(@"http://+:{0}/", port));
-            _listener.Start();
-            _listenerThread.Start();
+            _listener = HttpListener.Create(IPAddress.Parse("0.0.0.0"), (int)port);
+            _listener.RequestReceived += _listener_RequestReceived;
+            _listener.Start(5);
 
             for (int i = 0; i < _workers.Length; i++)
             {
                 _workers[i] = new Thread(Worker);
                 _workers[i].Start();
             }
+        }
+
+        void _listener_RequestReceived(object source, RequestEventArgs args)
+        {
+            IHttpClientContext context = (IHttpClientContext)source;
+            IHttpRequest request = args.Request;
+
+            _queue.Enqueue(new KeyValuePair<IHttpClientContext, IHttpRequest>(context, request));
+            _newQueueItem.Set();
         }
 
         public void Dispose()
@@ -58,62 +66,32 @@ namespace PerkTVTracker
             _isRunning = false;
             _listener.Stop();
             _listenForNextRequest.Set();
-            _listenerThread.Join();
             _newQueueItem.Set();
             foreach (Thread worker in _workers)
                 worker.Join();
-            _listener.Close();
-        }
-
-        private void HandleRequests()
-        {
-            while (_listener.IsListening)
-            {
-                _listener.BeginGetContext(ListenerCallback, null);
-                _listenForNextRequest.WaitOne();
-                _listenForNextRequest.Reset();
-            }
-        }
-
-        private void ListenerCallback(IAsyncResult result)
-        {
-            HttpListenerContext context = null;
-
             try
             {
-                if (_listener.IsListening)
-                    context = _listener.EndGetContext(result);
+                _listener.Stop();
             }
-            catch (Exception)
-            {
-                return;
-            }
-            finally
-            {
-                _listenForNextRequest.Set();
-            }
-            if (context == null)
-                return;
-            _queue.Enqueue(context);
-            _newQueueItem.Set();
+            catch { }
         }
 
         private void Worker()
         {
-            while ((_queue.Count > 0 || _newQueueItem.WaitOne()) && _listener.IsListening)
+            while ((_queue.Count > 0 || _newQueueItem.WaitOne()) && _isRunning)
             {
                 _newQueueItem.Reset();
-                HttpListenerContext context = null;
+                KeyValuePair<IHttpClientContext, IHttpRequest> kvp = new KeyValuePair<IHttpClientContext,IHttpRequest>();
                 if (Interlocked.CompareExchange(ref _lockedQueue, 1, 0) == 0)
                 {
-                    _queue.TryDequeue(out context);
+                    _queue.TryDequeue(out kvp);
                     //All done
                     Interlocked.Exchange(ref _lockedQueue, 0);
                 }
                 try
                 {
-                    if (context != null)
-                        ProcessRequest(context);
+                    if (kvp.Key != null)
+                        ProcessRequest(kvp.Key, kvp.Value);
                 }
                 catch (Exception)
                 {

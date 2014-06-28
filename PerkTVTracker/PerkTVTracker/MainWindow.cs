@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using HttpServer;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -90,18 +91,20 @@ namespace PerkTVTracker
 
         #endregion
 
-        void httpServer_ProcessRequest(HttpListenerContext context)
+        void httpServer_ProcessRequest(IHttpClientContext context, IHttpRequest req)
         {
-            using (HttpListenerResponse response = context.Response)
+            HttpResponse httpResponse = new HttpResponse(context, req);
+
+            using(Stream outputStream = httpResponse.Body)
             {
-                if (context.Request.Url.LocalPath == "/app")
+                if (req.UriPath == "/app")
                 {
                     AppData appData = new AppData();
                     appData.Accounts = new List<AccountData>();
                     int allPointCount = 0;
                     int allLifetimePointCount = 0;
                     double allHourlyRate = 0;
-                    foreach(Account account in Program.Settings.Accounts)
+                    foreach (Account account in Program.Settings.Accounts)
                     {
                         DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
@@ -127,7 +130,8 @@ namespace PerkTVTracker
                     };
 
                     XmlSerializer serializer = new XmlSerializer(typeof(AppData));
-                    serializer.Serialize(response.OutputStream, appData);
+                    serializer.Serialize(outputStream, appData);
+                    httpResponse.AddHeader("Content-Type", "text/xml");
                 }
                 else
                 {
@@ -136,8 +140,11 @@ namespace PerkTVTracker
                     {
                         this.DrawToBitmap(bmp, this.ClientRectangle);
                     }));
-                    bmp.Save(response.OutputStream, ImageFormat.Bmp);
+                    bmp.Save(outputStream, ImageFormat.Bmp);
+                    httpResponse.AddHeader("Content-Type", "image/png");
                 }
+                outputStream.Flush();
+                httpResponse.Send();
             }
         }
 
