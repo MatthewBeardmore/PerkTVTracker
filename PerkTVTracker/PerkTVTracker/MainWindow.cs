@@ -140,7 +140,7 @@ namespace PerkTVTracker
                     {
                         this.DrawToBitmap(bmp, this.ClientRectangle);
                     }));
-                    bmp.Save(outputStream, ImageFormat.Bmp);
+                    bmp.Save(outputStream, ImageFormat.Png);
                     httpResponse.AddHeader("Content-Type", "image/png");
                 }
                 outputStream.Flush();
@@ -204,7 +204,8 @@ namespace PerkTVTracker
                 SetGraphType(Program.Settings.GraphType);
             }
 
-            if(Program.Settings.LastWindowSize.Width != 0 && Program.Settings.LastWindowSize.Height != 0)
+            if(Program.Settings.LastWindowSize.Width != 0 && Program.Settings.LastWindowSize.Height != 0 &&
+                Program.Settings.LastWindowState != FormWindowState.Minimized)
             {
                 Location = Program.Settings.LastWindowLocation;
                 Size = Program.Settings.LastWindowSize;
@@ -501,6 +502,13 @@ namespace PerkTVTracker
             {
                 acc.LinearDataProcessor.ClearSamples();
             }
+        }
+
+        private void showMoreStatsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MoreStatsWindow window = new MoreStatsWindow();
+            window.UpdateStatsDisplay();
+            window.ShowDialog();
         }
     }
 
