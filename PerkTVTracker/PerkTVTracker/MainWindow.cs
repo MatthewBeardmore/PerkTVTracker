@@ -511,6 +511,13 @@ namespace PerkTVTracker
             window.UpdateStatsDisplay();
             window.ShowDialog();
         }
+
+        private void showMoreStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MoreStatsWindow window = new MoreStatsWindow();
+            window.UpdateStatsDisplay();
+            window.ShowDialog();
+        }
     }
 
     public enum TimeChangeEnum
