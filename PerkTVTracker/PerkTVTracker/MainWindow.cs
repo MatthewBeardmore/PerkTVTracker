@@ -265,10 +265,6 @@ namespace PerkTVTracker
                 catch { }//We just won't have a data point here
             }
 
-            Program.Settings.LastWindowState = WindowState;
-            Program.Settings.LastWindowSize = Size;
-            Program.Settings.LastWindowLocation = Location;
-
             DateTime minimum, maximum;
             lineCurvesChartType.GetMinMax(out minimum, out maximum);
 
@@ -277,7 +273,6 @@ namespace PerkTVTracker
             Program.Settings.GraphType = GetGraphType();
 
             Program.Settings.SaveSettings();
-
 
             if (updateGraph)
             {
@@ -489,6 +484,12 @@ namespace PerkTVTracker
         {
             _httpServer.Stop();
             trayIcon.Visible = false;
+
+            // Save window state
+            Program.Settings.LastWindowState = WindowState;
+            Program.Settings.LastWindowSize = Size;
+            Program.Settings.LastWindowLocation = Location;
+            Program.Settings.SaveSettings();
         }
 
         private void minimizeToTrayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -503,13 +504,6 @@ namespace PerkTVTracker
             {
                 acc.LinearDataProcessor.ClearSamples();
             }
-        }
-
-        private void showMoreStatsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MoreStatsWindow window = new MoreStatsWindow();
-            window.UpdateStatsDisplay();
-            window.ShowDialog();
         }
 
         private void showMoreStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
