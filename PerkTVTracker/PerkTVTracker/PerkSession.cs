@@ -71,7 +71,7 @@ namespace PerkTVTracker
             doc.LoadHtml(respString);
 
             HtmlNode node = doc.DocumentNode.SelectSingleNode("//span[@id = 'total-points']");
-            HtmlNode lifeTimePointsParent = doc.DocumentNode.SelectSingleNode("//div[@class = 'account-info']");
+            HtmlNode lifeTimePointsParent = doc.DocumentNode.SelectSingleNode("//p[@class = 'lifebal']");
             
             if (node == null)
             {
@@ -83,22 +83,15 @@ namespace PerkTVTracker
                 throw new Exception();
             }
 
-            HtmlNode lifeTimePointsNode = lifeTimePointsParent.ChildNodes.First((n) => n.Name == "p");
-
+            HtmlNode lifeTimePointsNode = lifeTimePointsParent.ChildNodes.First((n) => n.Name == "strong");
+            
             if(lifeTimePointsNode == null)
             {
                 throw new Exception();
             }
 
-            HtmlNode lifeTimeStrong = lifeTimePointsNode.ChildNodes.First((n) => n.Name == "strong");
-
-            if (lifeTimeStrong == null)
-            {
-                throw new Exception();
-            }
-
             int lifetimePoints;
-            if (!int.TryParse(lifeTimeStrong.InnerText.Replace(",", ""), out lifetimePoints))
+            if (!int.TryParse(lifeTimePointsNode.InnerText.Replace(",", ""), out lifetimePoints))
             {
                 throw new Exception();
             }
