@@ -444,15 +444,14 @@ namespace PerkTVTracker
 
         private DateTime AddTime(DateTime time, bool forward, TimeChangeEnum change)
         {
-            if (change == TimeChangeEnum.Day)
-                return time.AddDays(1 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.Hour)
-                return time.AddHours(1 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.SixHours)
-                return time.AddHours(6 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.ThirtyMinutes)
-                return time.AddMinutes(30 * (forward ? 1 : -1));
-            return time;
+            switch (change)
+            {
+                case TimeChangeEnum.Day: return time.AddDays(1 * (forward ? 1 : -1));
+                case TimeChangeEnum.Hour: return time.AddHours(1 * (forward ? 1 : -1));
+                case TimeChangeEnum.SixHours: return time.AddHours(6 * (forward ? 1 : -1));
+                case TimeChangeEnum.ThirtyMinutes: return time.AddMinutes(30 * (forward ? 1 : -1));
+                default: return time;
+            }
         }
 
         private void button_removeData_Click(object sender, EventArgs e)
