@@ -55,9 +55,7 @@
             this.clearSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.button_removeData = new System.Windows.Forms.Button();
             this.button_nextTime = new System.Windows.Forms.Button();
             this.comboBox_timeSpan = new System.Windows.Forms.ComboBox();
@@ -65,6 +63,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -249,9 +249,9 @@
             // 
             this.pointsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearDataToolStripMenuItem,
+            this.clearSamplesToolStripMenuItem,
             this.removeTop10OfDataToolStripMenuItem,
-            this.persistDataToolStripMenuItem,
-            this.clearSamplesToolStripMenuItem});
+            this.persistDataToolStripMenuItem});
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
             this.pointsToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.pointsToolStripMenuItem.Text = "Points";
@@ -259,15 +259,15 @@
             // clearDataToolStripMenuItem
             // 
             this.clearDataToolStripMenuItem.Name = "clearDataToolStripMenuItem";
-            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.clearDataToolStripMenuItem.Text = "Clear Data";
             this.clearDataToolStripMenuItem.Click += new System.EventHandler(this.clearDataToolStripMenuItem_Click);
             // 
             // removeTop10OfDataToolStripMenuItem
             // 
             this.removeTop10OfDataToolStripMenuItem.Name = "removeTop10OfDataToolStripMenuItem";
-            this.removeTop10OfDataToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.removeTop10OfDataToolStripMenuItem.Text = "Remove Top 10% of data";
+            this.removeTop10OfDataToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.removeTop10OfDataToolStripMenuItem.Text = "Remove Top 10% of Data";
             this.removeTop10OfDataToolStripMenuItem.Click += new System.EventHandler(this.removeTop10OfDataToolStripMenuItem_Click);
             // 
             // persistDataToolStripMenuItem
@@ -276,14 +276,14 @@
             this.persistDataToolStripMenuItem.CheckOnClick = true;
             this.persistDataToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.persistDataToolStripMenuItem.Name = "persistDataToolStripMenuItem";
-            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.persistDataToolStripMenuItem.Text = "Persist Data";
             this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
             // 
             // clearSamplesToolStripMenuItem
             // 
             this.clearSamplesToolStripMenuItem.Name = "clearSamplesToolStripMenuItem";
-            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.clearSamplesToolStripMenuItem.Text = "Clear Samples";
             this.clearSamplesToolStripMenuItem.Click += new System.EventHandler(this.clearSamplesToolStripMenuItem_Click);
             // 
@@ -321,19 +321,8 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(255, 114);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(255, 120);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // sessionViewControl1
-            // 
-            this.sessionViewControl1.AutoSize = true;
-            this.sessionViewControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.sessionViewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sessionViewControl1.Location = new System.Drawing.Point(2, 2);
-            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.sessionViewControl1.Name = "sessionViewControl1";
-            this.sessionViewControl1.Size = new System.Drawing.Size(251, 110);
-            this.sessionViewControl1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
@@ -355,19 +344,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(669, 552);
             this.tableLayoutPanel2.TabIndex = 23;
-            // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel2.SetColumnSpan(this.lineCurvesChartType, 4);
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 3);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(663, 517);
-            this.lineCurvesChartType.TabIndex = 18;
             // 
             // button_removeData
             // 
@@ -401,7 +377,7 @@
             "Hour",
             "6 Hours",
             "Day"});
-            this.comboBox_timeSpan.Location = new System.Drawing.Point(477, 528);
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(477, 526);
             this.comboBox_timeSpan.Name = "comboBox_timeSpan";
             this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 23);
             this.comboBox_timeSpan.TabIndex = 21;
@@ -441,6 +417,31 @@
             this.nextSampletoolStripStatusLabel.Name = "nextSampletoolStripStatusLabel";
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(68, 17);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
+            // 
+            // sessionViewControl1
+            // 
+            this.sessionViewControl1.AutoSize = true;
+            this.sessionViewControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.sessionViewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sessionViewControl1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sessionViewControl1.Location = new System.Drawing.Point(2, 2);
+            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.sessionViewControl1.Name = "sessionViewControl1";
+            this.sessionViewControl1.Size = new System.Drawing.Size(251, 116);
+            this.sessionViewControl1.TabIndex = 0;
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel2.SetColumnSpan(this.lineCurvesChartType, 4);
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 3);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(663, 517);
+            this.lineCurvesChartType.TabIndex = 18;
             // 
             // MainWindow
             // 

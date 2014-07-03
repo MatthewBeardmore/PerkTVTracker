@@ -31,10 +31,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label_currentCount = new System.Windows.Forms.Label();
+            this.hourlyRate = new System.Windows.Forms.Label();
+            this.label_hourlyRate = new System.Windows.Forms.Label();
             this.pointCount = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label_hourlyRate = new System.Windows.Forms.Label();
-            this.hourlyRate = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -47,12 +47,12 @@
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(2, 2);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(235, 104);
+            this.groupBox1.Size = new System.Drawing.Size(237, 112);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "email@mail.com";
@@ -70,14 +70,14 @@
             this.tableLayoutPanel2.Controls.Add(this.pointCount, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.comboBox1, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 16);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 18);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(231, 86);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(233, 92);
             this.tableLayoutPanel2.TabIndex = 8;
             // 
             // label_currentCount
@@ -87,17 +87,40 @@
             this.label_currentCount.Location = new System.Drawing.Point(2, 0);
             this.label_currentCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_currentCount.Name = "label_currentCount";
-            this.label_currentCount.Size = new System.Drawing.Size(80, 13);
+            this.label_currentCount.Size = new System.Drawing.Size(86, 15);
             this.label_currentCount.TabIndex = 1;
             this.label_currentCount.Text = "Current Count:";
+            // 
+            // hourlyRate
+            // 
+            this.hourlyRate.AutoSize = true;
+            this.hourlyRate.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hourlyRate.ForeColor = System.Drawing.Color.Black;
+            this.hourlyRate.Location = new System.Drawing.Point(2, 61);
+            this.hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
+            this.hourlyRate.Name = "hourlyRate";
+            this.hourlyRate.Size = new System.Drawing.Size(128, 25);
+            this.hourlyRate.TabIndex = 5;
+            this.hourlyRate.Text = "321 pts/hour";
+            // 
+            // label_hourlyRate
+            // 
+            this.label_hourlyRate.AutoSize = true;
+            this.label_hourlyRate.ForeColor = System.Drawing.Color.Black;
+            this.label_hourlyRate.Location = new System.Drawing.Point(2, 46);
+            this.label_hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_hourlyRate.Name = "label_hourlyRate";
+            this.label_hourlyRate.Size = new System.Drawing.Size(127, 15);
+            this.label_hourlyRate.TabIndex = 4;
+            this.label_hourlyRate.Text = "Estimated Hourly Rate:";
             // 
             // pointCount
             // 
             this.pointCount.AutoSize = true;
             this.pointCount.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pointCount.ForeColor = System.Drawing.Color.Black;
-            this.pointCount.Location = new System.Drawing.Point(2, 13);
-            this.pointCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 5);
+            this.pointCount.Location = new System.Drawing.Point(2, 15);
+            this.pointCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
             this.pointCount.Name = "pointCount";
             this.pointCount.Size = new System.Drawing.Size(207, 25);
             this.pointCount.TabIndex = 0;
@@ -115,32 +138,9 @@
             this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.tableLayoutPanel2.SetRowSpan(this.comboBox1, 2);
-            this.comboBox1.Size = new System.Drawing.Size(16, 21);
+            this.comboBox1.Size = new System.Drawing.Size(18, 23);
             this.comboBox1.TabIndex = 7;
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
-            // 
-            // label_hourlyRate
-            // 
-            this.label_hourlyRate.AutoSize = true;
-            this.label_hourlyRate.ForeColor = System.Drawing.Color.Black;
-            this.label_hourlyRate.Location = new System.Drawing.Point(2, 43);
-            this.label_hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_hourlyRate.Name = "label_hourlyRate";
-            this.label_hourlyRate.Size = new System.Drawing.Size(118, 13);
-            this.label_hourlyRate.TabIndex = 4;
-            this.label_hourlyRate.Text = "Estimated Hourly Rate:";
-            // 
-            // hourlyRate
-            // 
-            this.hourlyRate.AutoSize = true;
-            this.hourlyRate.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hourlyRate.ForeColor = System.Drawing.Color.Black;
-            this.hourlyRate.Location = new System.Drawing.Point(2, 56);
-            this.hourlyRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 5);
-            this.hourlyRate.Name = "hourlyRate";
-            this.hourlyRate.Size = new System.Drawing.Size(128, 25);
-            this.hourlyRate.TabIndex = 5;
-            this.hourlyRate.Text = "321 pts/hour";
             // 
             // tableLayoutPanel1
             // 
@@ -154,20 +154,21 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 108);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(241, 116);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // SessionViewControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SessionViewControl";
-            this.Size = new System.Drawing.Size(239, 108);
+            this.Size = new System.Drawing.Size(241, 116);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
