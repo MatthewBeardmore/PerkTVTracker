@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using HttpServer;
+﻿using HttpServer;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -226,7 +225,7 @@ namespace PerkTVTracker
             control.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.Controls.Add(control);
 
-            if (account.Session == null || !account.Session.HasCookies)
+            if (account.Session == null || !account.Session.HasCredentials)
                 account.Session = PerkLogInAgent.Login(account);
         }
 
