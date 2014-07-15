@@ -62,6 +62,9 @@ namespace PerkTVTracker
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
             trayIcon.Visible = true;
+
+            showTotalInformationToolStripMenuItem.Checked = Program.Settings.ShowTotalInformation;
+            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
         }
 
         #region System Tray code
@@ -509,6 +512,14 @@ namespace PerkTVTracker
             MoreStatsWindow window = new MoreStatsWindow();
             window.UpdateStatsDisplay();
             window.ShowDialog();
+        }
+
+        private void showTotalInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.Settings.ShowTotalInformation = showTotalInformationToolStripMenuItem.Checked;
+            Program.Settings.SaveSettings();
+
+            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
         }
     }
 

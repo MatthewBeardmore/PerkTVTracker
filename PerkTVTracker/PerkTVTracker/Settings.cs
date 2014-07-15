@@ -80,9 +80,12 @@ namespace PerkTVTracker
             set;
         }
 
+        public bool ShowTotalInformation { get; set; }
+
         public Settings()
         {
             MinimizeToTray = true;
+            ShowTotalInformation = true;
         }
 
         public void AddAccount(Account account)
