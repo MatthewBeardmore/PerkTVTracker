@@ -212,6 +212,9 @@ namespace PerkTVTracker
                 WindowState = Program.Settings.LastWindowState;
             }
 
+            splitContainer1.SplitterDistance = Program.Settings.MainWindowSplitterDistance;
+            splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
+
             foreach(Account account in Program.Settings.Accounts)
             {
                 AddAccount(account);
@@ -520,6 +523,12 @@ namespace PerkTVTracker
             Program.Settings.SaveSettings();
 
             totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Program.Settings.MainWindowSplitterDistance = splitContainer1.SplitterDistance;
+            Program.Settings.SaveSettings();
         }
     }
 

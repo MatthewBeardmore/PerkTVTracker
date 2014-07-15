@@ -82,6 +82,8 @@ namespace PerkTVTracker
 
         public bool ShowTotalInformation { get; set; }
 
+        public int MainWindowSplitterDistance { get; set; }
+
         public Settings()
         {
             MinimizeToTray = true;
