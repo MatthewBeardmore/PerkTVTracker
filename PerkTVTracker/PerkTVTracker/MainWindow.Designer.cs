@@ -46,6 +46,7 @@
             this.hideSidebarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLifetimePointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTotalInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.minimizeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,9 +64,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.showTotalInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.totalInfoBox = new PerkTVTracker.SessionViewControl();
             this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.setSampleAgeLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -232,6 +234,16 @@
             this.showLifetimePointsToolStripMenuItem.Text = "Show Lifetime Points";
             this.showLifetimePointsToolStripMenuItem.Click += new System.EventHandler(this.showLifetimePointsToolStripMenuItem_Click);
             // 
+            // showTotalInformationToolStripMenuItem
+            // 
+            this.showTotalInformationToolStripMenuItem.Checked = true;
+            this.showTotalInformationToolStripMenuItem.CheckOnClick = true;
+            this.showTotalInformationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showTotalInformationToolStripMenuItem.Name = "showTotalInformationToolStripMenuItem";
+            this.showTotalInformationToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.showTotalInformationToolStripMenuItem.Text = "Show Total Information";
+            this.showTotalInformationToolStripMenuItem.Click += new System.EventHandler(this.showTotalInformationToolStripMenuItem_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -253,7 +265,9 @@
             this.clearDataToolStripMenuItem,
             this.clearSamplesToolStripMenuItem,
             this.removeTop10OfDataToolStripMenuItem,
-            this.persistDataToolStripMenuItem});
+            this.persistDataToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.setSampleAgeLimitToolStripMenuItem});
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
             this.pointsToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.pointsToolStripMenuItem.Text = "Points";
@@ -420,16 +434,6 @@
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(68, 17);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
             // 
-            // showTotalInformationToolStripMenuItem
-            // 
-            this.showTotalInformationToolStripMenuItem.Checked = true;
-            this.showTotalInformationToolStripMenuItem.CheckOnClick = true;
-            this.showTotalInformationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showTotalInformationToolStripMenuItem.Name = "showTotalInformationToolStripMenuItem";
-            this.showTotalInformationToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.showTotalInformationToolStripMenuItem.Text = "Show Total Information";
-            this.showTotalInformationToolStripMenuItem.Click += new System.EventHandler(this.showTotalInformationToolStripMenuItem_Click);
-            // 
             // totalInfoBox
             // 
             this.totalInfoBox.AutoSize = true;
@@ -455,6 +459,18 @@
             this.lineCurvesChartType.Name = "lineCurvesChartType";
             this.lineCurvesChartType.Size = new System.Drawing.Size(663, 517);
             this.lineCurvesChartType.TabIndex = 18;
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(204, 6);
+            // 
+            // setSampleAgeLimitToolStripMenuItem
+            // 
+            this.setSampleAgeLimitToolStripMenuItem.Name = "setSampleAgeLimitToolStripMenuItem";
+            this.setSampleAgeLimitToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.setSampleAgeLimitToolStripMenuItem.Text = "Set Sample Age Limit";
+            this.setSampleAgeLimitToolStripMenuItem.Click += new System.EventHandler(this.setSampleAgeLimitToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -530,6 +546,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ToolStripMenuItem showMoreStatisticsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showTotalInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem setSampleAgeLimitToolStripMenuItem;
     }
 }
 

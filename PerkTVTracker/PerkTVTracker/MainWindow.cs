@@ -530,6 +530,25 @@ namespace PerkTVTracker
             Program.Settings.MainWindowSplitterDistance = splitContainer1.SplitterDistance;
             Program.Settings.SaveSettings();
         }
+
+        private void setSampleAgeLimitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SetSampleAgeLimitDialog())
+            {
+                var diagResult = dialog.ShowDialog();
+                if (diagResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Update every account
+                    foreach (var account in Program.Settings.Accounts)
+                    {
+                        account.LinearDataProcessor.SampleAgeLimit = dialog.SampleAgeLimit;
+                    }
+
+                    Program.Settings.SampleAgeLimit = dialog.SampleAgeLimit;
+                    Program.Settings.SaveSettings();
+                }
+            }
+        }
     }
 
     public enum TimeChangeEnum

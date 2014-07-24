@@ -14,7 +14,7 @@ namespace PerkTVTracker
         public string Password;
         public bool ShowOnGraph = true;
         public DataPoints DataPoints = new DataPoints();
-        public LinearDataProcessor LinearDataProcessor = new LinearDataProcessor() { SampleAgeLimit = new TimeSpan(1, 0, 0) };
+        public LinearDataProcessor LinearDataProcessor = new LinearDataProcessor();
         public PerkSession Session;
 
         public override bool Equals(object obj)

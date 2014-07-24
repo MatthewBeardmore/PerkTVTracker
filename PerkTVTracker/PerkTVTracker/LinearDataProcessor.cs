@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace PerkTVTracker
 {
@@ -10,6 +13,12 @@ namespace PerkTVTracker
     public class LinearDataProcessor
     {
         private List<Sample> _samples = new List<Sample>();
+        private TimeSpan _sampleAgeLimit;
+
+        public LinearDataProcessor()
+        {
+            _sampleAgeLimit = new TimeSpan(1, 0, 0);
+        }
 
         public List<Sample> Samples
         {
@@ -17,7 +26,16 @@ namespace PerkTVTracker
             set { _samples = value; }
         }
 
-        public TimeSpan SampleAgeLimit { get; set; }
+        [XmlIgnore]
+        public TimeSpan SampleAgeLimit
+        {
+            get { return _sampleAgeLimit; }
+            set
+            {
+                _sampleAgeLimit = value;
+                PruneSamples();
+            }
+        }
 
         public DataSummary GetDataSummary()
         {
@@ -66,19 +84,19 @@ namespace PerkTVTracker
             Sample oldest = _samples[0];
             Sample latest = _samples.Last();
 
-            if ((latest.Time - oldest.Time).TotalMinutes <= 60)
+            if ((latest.Time - oldest.Time).TotalMinutes <= SampleAgeLimit.TotalMinutes)
             {
                 // Nothing to do
                 return;
             }
 
-            // Find the newest that's also older than an hour
+            // Find the newest that's also older than the age limit
             int i = 0;
             for (; i < _samples.Count; i++)
             {
                 Sample sample = _samples[i];
 
-                if ((latest.Time - sample.Time).TotalMinutes <= 60)
+                if ((latest.Time - sample.Time).TotalMinutes <= SampleAgeLimit.TotalMinutes)
                 {
                     break;
                 }
