@@ -54,9 +54,13 @@
             this.clearSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeTop10OfDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.setSampleAgeLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.totalInfoBox = new PerkTVTracker.SessionViewControl();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
             this.button_removeData = new System.Windows.Forms.Button();
             this.button_nextTime = new System.Windows.Forms.Button();
             this.comboBox_timeSpan = new System.Windows.Forms.ComboBox();
@@ -64,10 +68,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.totalInfoBox = new PerkTVTracker.SessionViewControl();
-            this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.setSampleAgeLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -303,6 +303,18 @@
             this.persistDataToolStripMenuItem.Text = "Persist Data";
             this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(204, 6);
+            // 
+            // setSampleAgeLimitToolStripMenuItem
+            // 
+            this.setSampleAgeLimitToolStripMenuItem.Name = "setSampleAgeLimitToolStripMenuItem";
+            this.setSampleAgeLimitToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.setSampleAgeLimitToolStripMenuItem.Text = "Set Sample Age Limit";
+            this.setSampleAgeLimitToolStripMenuItem.Click += new System.EventHandler(this.setSampleAgeLimitToolStripMenuItem_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -340,6 +352,19 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(255, 120);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // totalInfoBox
+            // 
+            this.totalInfoBox.AutoSize = true;
+            this.totalInfoBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.totalInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totalInfoBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalInfoBox.Location = new System.Drawing.Point(2, 2);
+            this.totalInfoBox.Margin = new System.Windows.Forms.Padding(2);
+            this.totalInfoBox.Name = "totalInfoBox";
+            this.totalInfoBox.Size = new System.Drawing.Size(251, 116);
+            this.totalInfoBox.TabIndex = 0;
+            this.totalInfoBox.Visible = false;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
@@ -360,6 +385,19 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(669, 552);
             this.tableLayoutPanel2.TabIndex = 23;
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel2.SetColumnSpan(this.lineCurvesChartType, 4);
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 3);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(663, 517);
+            this.lineCurvesChartType.TabIndex = 18;
             // 
             // button_removeData
             // 
@@ -393,7 +431,7 @@
             "Hour",
             "6 Hours",
             "Day"});
-            this.comboBox_timeSpan.Location = new System.Drawing.Point(477, 526);
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(477, 528);
             this.comboBox_timeSpan.Name = "comboBox_timeSpan";
             this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 23);
             this.comboBox_timeSpan.TabIndex = 21;
@@ -433,44 +471,6 @@
             this.nextSampletoolStripStatusLabel.Name = "nextSampletoolStripStatusLabel";
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(68, 17);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
-            // 
-            // totalInfoBox
-            // 
-            this.totalInfoBox.AutoSize = true;
-            this.totalInfoBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.totalInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalInfoBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalInfoBox.Location = new System.Drawing.Point(2, 2);
-            this.totalInfoBox.Margin = new System.Windows.Forms.Padding(2);
-            this.totalInfoBox.Name = "totalInfoBox";
-            this.totalInfoBox.Size = new System.Drawing.Size(251, 116);
-            this.totalInfoBox.TabIndex = 0;
-            this.totalInfoBox.Visible = false;
-            // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel2.SetColumnSpan(this.lineCurvesChartType, 4);
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(3, 3);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(663, 517);
-            this.lineCurvesChartType.TabIndex = 18;
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(204, 6);
-            // 
-            // setSampleAgeLimitToolStripMenuItem
-            // 
-            this.setSampleAgeLimitToolStripMenuItem.Name = "setSampleAgeLimitToolStripMenuItem";
-            this.setSampleAgeLimitToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.setSampleAgeLimitToolStripMenuItem.Text = "Set Sample Age Limit";
-            this.setSampleAgeLimitToolStripMenuItem.Click += new System.EventHandler(this.setSampleAgeLimitToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

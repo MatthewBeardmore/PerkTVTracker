@@ -40,11 +40,13 @@ namespace PerkTVTracker
 
         public void UpdateDisplay(DataSummary summary)
         {
-            pointCount.Text = summary.PointCount.ToString("#,##0 pts");
+            string ptCountText = summary.PointCount.ToString("#,##0 pts");
             if (summary.LifetimePointCount > 0 && !Program.Settings.HideLifetimePoints)
             {
-                pointCount.Text += summary.LifetimePointCount.ToString(" (of #,##0)");
+                ptCountText += summary.LifetimePointCount.ToString(" (of #,##0)");
             }
+
+            pointCount.Text = ptCountText;
 
             int hourlyRate = (int)Math.Round(summary.HourlyRate);
             string formattedHourly = hourlyRate.ToString("#,##0");
