@@ -73,5 +73,11 @@ namespace PerkTVTracker
                 button_hideOnGraph_Click(sender, e);
             comboBox1.SelectedIndex = 0;
         }
+
+        // Required for autosizing the control properly
+        private void SessionViewControl_SizeChanged(object sender, EventArgs e)
+        {
+            tableLayoutPanel2.MaximumSize = new Size(Size.Width, int.MaxValue);
+        }
     }
 }
