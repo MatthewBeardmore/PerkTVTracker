@@ -15,6 +15,8 @@ namespace PerkTVTracker
         public SetSampleAgeLimitDialog()
         {
             InitializeComponent();
+
+            textBox1.Text = ((int)Program.Settings.SampleAgeLimit.TotalMinutes).ToString();
         }
 
         public TimeSpan SampleAgeLimit
