@@ -36,6 +36,19 @@ namespace PerkTVTracker
             }
         }
 
+        public async Task<int> GetLifetimeVideoCount()
+        {
+            string apiUrl = string.Format("https://api-tv.perk.com/v3/views.json?user_id={0}", UserId);
+            HttpWebRequest req = WebRequest.CreateHttp(apiUrl);
+
+            using (WebResponse resp = await req.GetResponseAsync())
+            using (var sr = new StreamReader(resp.GetResponseStream()))
+            {
+                JToken token = JObject.Parse(sr.ReadToEnd());
+                return (int)token["data"]["lifetime_count"];
+            }
+        }
+
         public async Task<KeyValuePair<int, int>> GetCurrentPointCount()
         {
             string apiUrl = string.Format("https://api.perk.com/api/user/id/{0}/token/{1}", UserId, AccessToken);
