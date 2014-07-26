@@ -23,6 +23,8 @@ namespace PerkTVTracker
             Dictionary<DateTime, DataSummary> todayData = new Dictionary<DateTime, DataSummary>();
             Dictionary<DateTime, DataSummary> allTimeData = new Dictionary<DateTime, DataSummary>();
 
+            //List<Dictionary<DateTime, DataSummary>> datas = new List<Dictionary<DateTime, DataSummary>>();
+
             DataSummary todaysMinCount = null;
             DataSummary todaysMaxCount = null;
 
@@ -126,19 +128,27 @@ namespace PerkTVTracker
 
             #region Yesterday's stats
 
-            hourlyRate = 0;
-
-            foreach (DataSummary summary in yesterdaysData.Values)
+            if (yesterdaysMinCount != null && yesterdaysMaxCount != null)
             {
-                hourlyRate += summary.HourlyRate;
+                hourlyRate = 0;
+
+                foreach (DataSummary summary in yesterdaysData.Values)
+                {
+                    hourlyRate += summary.HourlyRate;
+                }
+                hourlyRate /= yesterdaysData.Count;
+
+                yesterdaysPointsGained.Text = (yesterdaysMaxCount.LifetimePointCount - yesterdaysMinCount.LifetimePointCount).ToString("#,##0 pts");
+
+                int yesterdaysHourlyRate = (int)Math.Round(hourlyRate);
+                formattedHourly = yesterdaysHourlyRate.ToString("#,##0");
+                this.yesterdaysHourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, yesterdaysHourlyRate != 1 ? "pts" : "pt");
             }
-            hourlyRate /= yesterdaysData.Count;
-
-            yesterdaysPointsGained.Text = (yesterdaysMaxCount.LifetimePointCount - yesterdaysMinCount.LifetimePointCount).ToString("#,##0 pts");
-
-            int yesterdaysHourlyRate = (int)Math.Round(hourlyRate);
-            formattedHourly = yesterdaysHourlyRate.ToString("#,##0");
-            this.yesterdaysHourlyRate.Text = string.Format("{0} {1}/hour", formattedHourly, yesterdaysHourlyRate != 1 ? "pts" : "pt");
+            else
+            {
+                yesterdaysPointsGained.Text = "No data available";
+                this.yesterdaysHourlyRate.Text = "No data available";
+            }
 
             #endregion
 
@@ -163,6 +173,9 @@ namespace PerkTVTracker
 
         private void CopySummary(DataSummary minCountAcc, ref DataSummary minCount)
         {
+            if (minCountAcc == null)
+                return;
+
             if (minCount == null)
                 minCount = minCountAcc.Copy();
             else

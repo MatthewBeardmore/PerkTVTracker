@@ -43,6 +43,7 @@
             this.todayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.last6HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lastHourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showMoreStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.hideSidebarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,6 @@
             this.minimizeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeTop10OfDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -63,7 +63,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.showMoreStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -206,6 +205,13 @@
             this.lastHourToolStripMenuItem.Text = "Last Hour";
             this.lastHourToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
+            // showMoreStatsToolStripMenuItem
+            // 
+            this.showMoreStatsToolStripMenuItem.Name = "showMoreStatsToolStripMenuItem";
+            this.showMoreStatsToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.showMoreStatsToolStripMenuItem.Text = "Show More Stats";
+            this.showMoreStatsToolStripMenuItem.Click += new System.EventHandler(this.showMoreStatsToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -260,7 +266,6 @@
             // 
             this.pointsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearDataToolStripMenuItem,
-            this.removeTop10OfDataToolStripMenuItem,
             this.persistDataToolStripMenuItem,
             this.clearSamplesToolStripMenuItem});
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
@@ -270,16 +275,9 @@
             // clearDataToolStripMenuItem
             // 
             this.clearDataToolStripMenuItem.Name = "clearDataToolStripMenuItem";
-            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
+            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
             this.clearDataToolStripMenuItem.Text = "Clear Data";
             this.clearDataToolStripMenuItem.Click += new System.EventHandler(this.clearDataToolStripMenuItem_Click);
-            // 
-            // removeTop10OfDataToolStripMenuItem
-            // 
-            this.removeTop10OfDataToolStripMenuItem.Name = "removeTop10OfDataToolStripMenuItem";
-            this.removeTop10OfDataToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
-            this.removeTop10OfDataToolStripMenuItem.Text = "Remove Top 10% of data";
-            this.removeTop10OfDataToolStripMenuItem.Click += new System.EventHandler(this.removeTop10OfDataToolStripMenuItem_Click);
             // 
             // persistDataToolStripMenuItem
             // 
@@ -287,14 +285,14 @@
             this.persistDataToolStripMenuItem.CheckOnClick = true;
             this.persistDataToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.persistDataToolStripMenuItem.Name = "persistDataToolStripMenuItem";
-            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
+            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
             this.persistDataToolStripMenuItem.Text = "Persist Data";
             this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
             // 
             // clearSamplesToolStripMenuItem
             // 
             this.clearSamplesToolStripMenuItem.Name = "clearSamplesToolStripMenuItem";
-            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(246, 24);
+            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
             this.clearSamplesToolStripMenuItem.Text = "Clear Samples";
             this.clearSamplesToolStripMenuItem.Click += new System.EventHandler(this.clearSamplesToolStripMenuItem_Click);
             // 
@@ -347,7 +345,7 @@
             "Hour",
             "6 Hours",
             "Day"});
-            this.comboBox_timeSpan.Location = new System.Drawing.Point(483, 521);
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(492, 521);
             this.comboBox_timeSpan.Name = "comboBox_timeSpan";
             this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 28);
             this.comboBox_timeSpan.TabIndex = 21;
@@ -355,7 +353,7 @@
             // button_nextTime
             // 
             this.button_nextTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_nextTime.Location = new System.Drawing.Point(644, 523);
+            this.button_nextTime.Location = new System.Drawing.Point(653, 523);
             this.button_nextTime.Name = "button_nextTime";
             this.button_nextTime.Size = new System.Drawing.Size(28, 23);
             this.button_nextTime.TabIndex = 20;
@@ -366,7 +364,7 @@
             // button_previousTime
             // 
             this.button_previousTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_previousTime.Location = new System.Drawing.Point(610, 523);
+            this.button_previousTime.Location = new System.Drawing.Point(619, 523);
             this.button_previousTime.Name = "button_previousTime";
             this.button_previousTime.Size = new System.Drawing.Size(28, 23);
             this.button_previousTime.TabIndex = 19;
@@ -383,7 +381,7 @@
             this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lineCurvesChartType.Location = new System.Drawing.Point(0, 0);
             this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(696, 515);
+            this.lineCurvesChartType.Size = new System.Drawing.Size(705, 515);
             this.lineCurvesChartType.TabIndex = 18;
             // 
             // statusStrip1
@@ -410,13 +408,6 @@
             this.nextSampletoolStripStatusLabel.Name = "nextSampletoolStripStatusLabel";
             this.nextSampletoolStripStatusLabel.Size = new System.Drawing.Size(87, 20);
             this.nextSampletoolStripStatusLabel.Text = "60 seconds";
-            // 
-            // showMoreStatsToolStripMenuItem
-            // 
-            this.showMoreStatsToolStripMenuItem.Name = "showMoreStatsToolStripMenuItem";
-            this.showMoreStatsToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
-            this.showMoreStatsToolStripMenuItem.Text = "Show More Stats";
-            this.showMoreStatsToolStripMenuItem.Click += new System.EventHandler(this.showMoreStatsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -475,7 +466,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem pointsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearDataToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeTop10OfDataToolStripMenuItem;
         private SessionViewControl sessionViewControl1;
         private System.Windows.Forms.ToolStripMenuItem persistDataToolStripMenuItem;
         private System.Windows.Forms.Button button_nextTime;
