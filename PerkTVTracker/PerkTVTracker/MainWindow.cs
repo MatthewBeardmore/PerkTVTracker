@@ -476,7 +476,7 @@ namespace PerkTVTracker
                     List<DataSummary> pointsToRemove = new List<DataSummary>();
                     foreach (DataSummary summary in acc.DataPoints.Points)
                     {
-                        if(summary.LastSampleTimestamp >= minimum && summary.LastSampleTimestamp <= maximum)
+                        if(summary.LastSampleTimestamp >= maximum && summary.LastSampleTimestamp <= minimum)
                         {
                             pointsToRemove.Add(summary);
                         }
