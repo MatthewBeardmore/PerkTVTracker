@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace PerkTVTracker
@@ -80,9 +82,35 @@ namespace PerkTVTracker
             set;
         }
 
+        [XmlIgnore]
+        public TimeSpan SampleAgeLimit { get; set; }
+
+        // XmlSerializer does not support TimeSpan, so use this property for 
+        // serialization instead. Do not use this in code; use SampleAgeLimit instead.
+        // http://stackoverflow.com/a/6734557
+        [XmlElement(DataType = "duration", ElementName = "SampleAgeLimitString")]
+        public string SampleAgeLimitString
+        {
+            get
+            {
+                return XmlConvert.ToString(SampleAgeLimit);
+            }
+            set
+            {
+                SampleAgeLimit = string.IsNullOrEmpty(value) ?
+                    TimeSpan.Zero : XmlConvert.ToTimeSpan(value);
+            }
+        }
+
+        public bool ShowTotalInformation { get; set; }
+
+        public int MainWindowSplitterDistance { get; set; }
+
         public Settings()
         {
             MinimizeToTray = true;
+            ShowTotalInformation = true;
+            SampleAgeLimit = new TimeSpan(1, 0, 0); // Default of 1 hour
         }
 
         public void AddAccount(Account account)
@@ -91,6 +119,8 @@ namespace PerkTVTracker
             {
                 throw new Exception();
             }
+
+            account.LinearDataProcessor.SampleAgeLimit = SampleAgeLimit;
 
             _accounts.Add(account);
 
@@ -125,6 +155,13 @@ namespace PerkTVTracker
 
                 settings.SaveSettings();
             }
+
+            // Set the sample age limits for each account
+            foreach (var account in settings.Accounts)
+            {
+                account.LinearDataProcessor.SampleAgeLimit = settings.SampleAgeLimit;
+            }
+
             return settings;
         }
 

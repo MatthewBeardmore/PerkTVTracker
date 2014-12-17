@@ -140,24 +140,14 @@ namespace PerkTVTracker
 			Color.FromArgb(120, 147, 190)
 		};
 
-        public void SetSeries(List<Series> series, GraphType graphType)
+        public void SetSeries(List<Series> series, Dictionary<DateTime, double> totalPoints, GraphType graphType)
         {
             int colorCntr = -1;
 
-            Dictionary<DateTime, double> totalPoints = new Dictionary<DateTime, double>();
             chart1.Series.Clear();
             string lastTag = null;
             foreach(Series s in series)
             {
-                foreach(DataPoint point in s.Points)
-                {
-                    if (totalPoints.ContainsKey(DateTime.FromOADate(point.XValue)))
-                    {
-                        totalPoints[DateTime.FromOADate(point.XValue)] += point.YValues[0];
-                    }
-                    else
-                        totalPoints.Add(DateTime.FromOADate(point.XValue), point.YValues[0]);
-                }
                 //Fix the color so that any derivative series match up with their other parts
                 if (lastTag != s.Tag.ToString())
                     colorCntr++;
@@ -174,7 +164,10 @@ namespace PerkTVTracker
                 Series totalSeries = DataPoints.CreateDefaultSeries("Total");
                 int cntr = 1;
 
-                foreach (KeyValuePair<DateTime, double> kvp in totalPoints)
+                var totalPointsLst = totalPoints.ToList();
+                totalPointsLst.Sort((a, b) => a.Key.CompareTo(b.Key));
+
+                foreach (KeyValuePair<DateTime, double> kvp in totalPointsLst)
                 {
                     if (lastDataPoint != DateTime.MinValue && (kvp.Key - lastDataPoint).TotalMinutes > 5)
                     {
@@ -190,8 +183,10 @@ namespace PerkTVTracker
                 }
                 totalSeries.Color = _colorsBrightPastel[colorCntr];
                 chart1.Series.Add(totalSeries);
-
             }
+
+            if (totalPoints.Count > 0)
+                chart1.ChartAreas["Default"].AxisY.Maximum = totalPoints.Values.Max() + 100;
 
             if (graphType == GraphType.AllTime)
             {

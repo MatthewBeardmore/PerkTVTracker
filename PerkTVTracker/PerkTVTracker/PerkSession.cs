@@ -1,4 +1,4 @@
-﻿using HtmlAgilityPack;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,104 +14,56 @@ namespace PerkTVTracker
     [Serializable]
     public class PerkSession
     {
-        [XmlIgnore]
-        private CookieCollection _cookies;
+        public PerkSession()
+        {
+        }
 
-        public string XmlCookies
+        internal PerkSession(string userId, string accessToken)
+        {
+            UserId = userId;
+            AccessToken = accessToken;
+        }
+
+        public string UserId { get; set; }
+
+        public string AccessToken { get; set; }
+
+        public bool HasCredentials
         {
             get
             {
-                BinaryFormatter formater = new BinaryFormatter();
-                using(MemoryStream stream = new MemoryStream())
-                {
-                    formater.Serialize(stream, _cookies);
-                    return Convert.ToBase64String(stream.ToArray());
-                }
-            }
-            set
-            {
-                BinaryFormatter formater = new BinaryFormatter();
-                using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(value)))
-                {
-                    _cookies = (CookieCollection)formater.Deserialize(stream);
-                }
+                return !string.IsNullOrWhiteSpace(UserId) && !string.IsNullOrWhiteSpace(AccessToken);
             }
         }
 
-        public bool HasCookies
-        { 
-            get 
-            { 
-                if(_cookies == null)
-                    return false;
-                foreach(Cookie cookie in _cookies)
-                {
-                    if (cookie.Expired)
-                        return false;
-                }
-                return true;
-            } 
-        }
-
-        public PerkSession() { }
-
-        internal PerkSession(CookieCollection sessionData)
+        public async Task<int> GetLifetimeVideoCount()
         {
-            _cookies = sessionData;
+            string apiUrl = string.Format("https://api-tv.perk.com/v3/views.json?user_id={0}", UserId);
+            HttpWebRequest req = WebRequest.CreateHttp(apiUrl);
+
+            using (WebResponse resp = await req.GetResponseAsync())
+            using (var sr = new StreamReader(resp.GetResponseStream()))
+            {
+                JToken token = JObject.Parse(sr.ReadToEnd());
+                return (int)token["data"]["lifetime_count"];
+            }
         }
 
         public async Task<KeyValuePair<int, int>> GetCurrentPointCount()
         {
-            HttpWebRequest req = CreateAuthenticatedHttpWebRequest("http://perk.com/perk/account");
+            string apiUrl = string.Format("https://api.perk.com/api/user/id/{0}/token/{1}", UserId, AccessToken);
+            HttpWebRequest req = WebRequest.CreateHttp(apiUrl);
 
-            WebResponse resp = await req.GetResponseAsync();
-            string respString = new StreamReader(resp.GetResponseStream()).ReadToEnd();
-
-            var doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(respString);
-
-            HtmlNode node = doc.DocumentNode.SelectSingleNode("//span[@id = 'total-points']");
-            HtmlNode lifeTimePointsParent = doc.DocumentNode.SelectSingleNode("//p[@class = 'lifebal']");
-            
-            if (node == null)
+            using (WebResponse resp = await req.GetResponseAsync())
+            using (var sr = new StreamReader(resp.GetResponseStream()))
             {
-                throw new Exception();
+                JToken token = JObject.Parse(sr.ReadToEnd());
+                int availablePoints = (int)token.SelectToken("availableperks");
+                int redeemedPoints = (int)token.SelectToken("redeemedperks");
+                int lifetimePoints = availablePoints + redeemedPoints;
+
+                return new KeyValuePair<int, int>(availablePoints, lifetimePoints);
             }
-
-            if (lifeTimePointsParent == null)
-            {
-                throw new Exception();
-            }
-
-            HtmlNode lifeTimePointsNode = lifeTimePointsParent.ChildNodes.First((n) => n.Name == "strong");
-            
-            if(lifeTimePointsNode == null)
-            {
-                throw new Exception();
-            }
-
-            int lifetimePoints;
-            if (!int.TryParse(lifeTimePointsNode.InnerText.Replace(",", ""), out lifetimePoints))
-            {
-                throw new Exception();
-            }
-
-            int points;
-            if (!int.TryParse(node.InnerText, out points))
-            {
-                throw new Exception();
-            }
-
-            return new KeyValuePair<int,int>(points, lifetimePoints);
-        }
-
-        private HttpWebRequest CreateAuthenticatedHttpWebRequest(string requestUriString)
-        {
-            HttpWebRequest req = WebRequest.CreateHttp(requestUriString);
-            req.CookieContainer = new CookieContainer();
-            req.CookieContainer.Add(_cookies);
-
-            return req;
         }
     }
 }

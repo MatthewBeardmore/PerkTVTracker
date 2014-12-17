@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.sessionViewControl1 = new PerkTVTracker.SessionViewControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,54 +41,41 @@
             this.todayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.last6HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lastHourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showMoreStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showMoreStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.hideSidebarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLifetimePointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTotalInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.minimizeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.persistDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.setSampleAgeLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button_removeData = new System.Windows.Forms.Button();
-            this.comboBox_timeSpan = new System.Windows.Forms.ComboBox();
-            this.button_nextTime = new System.Windows.Forms.Button();
-            this.button_previousTime = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.totalInfoBox = new PerkTVTracker.SessionViewControl();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.lineCurvesChartType = new PerkTVTracker.LineCurvesChartType();
+            this.button_removeData = new System.Windows.Forms.Button();
+            this.button_nextTime = new System.Windows.Forms.Button();
+            this.comboBox_timeSpan = new System.Windows.Forms.ComboBox();
+            this.button_previousTime = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextSampletoolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.sessionViewControl1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 552);
-            this.flowLayoutPanel1.TabIndex = 19;
-            // 
-            // sessionViewControl1
-            // 
-            this.sessionViewControl1.Location = new System.Drawing.Point(3, 4);
-            this.sessionViewControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.sessionViewControl1.MaximumSize = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.MinimumSize = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.Name = "sessionViewControl1";
-            this.sessionViewControl1.Size = new System.Drawing.Size(275, 160);
-            this.sessionViewControl1.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -100,7 +85,8 @@
             this.pointsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(952, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1190, 28);
             this.menuStrip1.TabIndex = 22;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -140,11 +126,12 @@
             this.viewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timeSpanToolStripMenuItem,
-            this.showMoreStatsToolStripMenuItem,
+            this.showMoreStatisticsToolStripMenuItem,
             this.toolStripSeparator1,
             this.hideSidebarToolStripMenuItem,
             this.hideGraphToolStripMenuItem,
             this.showLifetimePointsToolStripMenuItem,
+            this.showTotalInformationToolStripMenuItem,
             this.toolStripSeparator3,
             this.minimizeToTrayToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
@@ -160,7 +147,7 @@
             this.last6HoursToolStripMenuItem,
             this.lastHourToolStripMenuItem});
             this.timeSpanToolStripMenuItem.Name = "timeSpanToolStripMenuItem";
-            this.timeSpanToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.timeSpanToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.timeSpanToolStripMenuItem.Text = "Time Span";
             // 
             // allTimeToolStripMenuItem
@@ -205,17 +192,17 @@
             this.lastHourToolStripMenuItem.Text = "Last Hour";
             this.lastHourToolStripMenuItem.Click += new System.EventHandler(this.graphDisplayToolStripMenuItem_Click);
             // 
-            // showMoreStatsToolStripMenuItem
+            // showMoreStatisticsToolStripMenuItem
             // 
-            this.showMoreStatsToolStripMenuItem.Name = "showMoreStatsToolStripMenuItem";
-            this.showMoreStatsToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
-            this.showMoreStatsToolStripMenuItem.Text = "Show More Stats";
-            this.showMoreStatsToolStripMenuItem.Click += new System.EventHandler(this.showMoreStatsToolStripMenuItem_Click);
+            this.showMoreStatisticsToolStripMenuItem.Name = "showMoreStatisticsToolStripMenuItem";
+            this.showMoreStatisticsToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
+            this.showMoreStatisticsToolStripMenuItem.Text = "Show More Statistics";
+            this.showMoreStatisticsToolStripMenuItem.Click += new System.EventHandler(this.showMoreStatisticsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(231, 6);
             // 
             // hideSidebarToolStripMenuItem
             // 
@@ -223,7 +210,7 @@
             this.hideSidebarToolStripMenuItem.CheckOnClick = true;
             this.hideSidebarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideSidebarToolStripMenuItem.Name = "hideSidebarToolStripMenuItem";
-            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.hideSidebarToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.hideSidebarToolStripMenuItem.Text = "Show Sidebar";
             this.hideSidebarToolStripMenuItem.Click += new System.EventHandler(this.hideSidebarToolStripMenuItem_Click);
             // 
@@ -233,7 +220,7 @@
             this.hideGraphToolStripMenuItem.CheckOnClick = true;
             this.hideGraphToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideGraphToolStripMenuItem.Name = "hideGraphToolStripMenuItem";
-            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.hideGraphToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.hideGraphToolStripMenuItem.Text = "Show Graph";
             this.hideGraphToolStripMenuItem.Click += new System.EventHandler(this.hideGraphToolStripMenuItem_Click);
             // 
@@ -243,14 +230,24 @@
             this.showLifetimePointsToolStripMenuItem.CheckOnClick = true;
             this.showLifetimePointsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showLifetimePointsToolStripMenuItem.Name = "showLifetimePointsToolStripMenuItem";
-            this.showLifetimePointsToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.showLifetimePointsToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.showLifetimePointsToolStripMenuItem.Text = "Show Lifetime Points";
             this.showLifetimePointsToolStripMenuItem.Click += new System.EventHandler(this.showLifetimePointsToolStripMenuItem_Click);
+            // 
+            // showTotalInformationToolStripMenuItem
+            // 
+            this.showTotalInformationToolStripMenuItem.Checked = true;
+            this.showTotalInformationToolStripMenuItem.CheckOnClick = true;
+            this.showTotalInformationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showTotalInformationToolStripMenuItem.Name = "showTotalInformationToolStripMenuItem";
+            this.showTotalInformationToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
+            this.showTotalInformationToolStripMenuItem.Text = "Show Total Information";
+            this.showTotalInformationToolStripMenuItem.Click += new System.EventHandler(this.showTotalInformationToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(231, 6);
             // 
             // minimizeToTrayToolStripMenuItem
             // 
@@ -258,7 +255,7 @@
             this.minimizeToTrayToolStripMenuItem.CheckOnClick = true;
             this.minimizeToTrayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.minimizeToTrayToolStripMenuItem.Name = "minimizeToTrayToolStripMenuItem";
-            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(216, 24);
+            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.minimizeToTrayToolStripMenuItem.Text = "Minimize to Tray";
             this.minimizeToTrayToolStripMenuItem.Click += new System.EventHandler(this.minimizeToTrayToolStripMenuItem_Click);
             // 
@@ -266,8 +263,10 @@
             // 
             this.pointsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearDataToolStripMenuItem,
+            this.clearSamplesToolStripMenuItem,
             this.persistDataToolStripMenuItem,
-            this.clearSamplesToolStripMenuItem});
+            this.toolStripSeparator4,
+            this.setSampleAgeLimitToolStripMenuItem});
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
             this.pointsToolStripMenuItem.Size = new System.Drawing.Size(61, 24);
             this.pointsToolStripMenuItem.Text = "Points";
@@ -275,9 +274,16 @@
             // clearDataToolStripMenuItem
             // 
             this.clearDataToolStripMenuItem.Name = "clearDataToolStripMenuItem";
-            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(221, 24);
             this.clearDataToolStripMenuItem.Text = "Clear Data";
             this.clearDataToolStripMenuItem.Click += new System.EventHandler(this.clearDataToolStripMenuItem_Click);
+            // 
+            // clearSamplesToolStripMenuItem
+            // 
+            this.clearSamplesToolStripMenuItem.Name = "clearSamplesToolStripMenuItem";
+            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(221, 24);
+            this.clearSamplesToolStripMenuItem.Text = "Clear Samples";
+            this.clearSamplesToolStripMenuItem.Click += new System.EventHandler(this.clearSamplesToolStripMenuItem_Click);
             // 
             // persistDataToolStripMenuItem
             // 
@@ -285,55 +291,136 @@
             this.persistDataToolStripMenuItem.CheckOnClick = true;
             this.persistDataToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.persistDataToolStripMenuItem.Name = "persistDataToolStripMenuItem";
-            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
+            this.persistDataToolStripMenuItem.Size = new System.Drawing.Size(221, 24);
             this.persistDataToolStripMenuItem.Text = "Persist Data";
             this.persistDataToolStripMenuItem.Click += new System.EventHandler(this.persistDataToolStripMenuItem_Click);
             // 
-            // clearSamplesToolStripMenuItem
+            // toolStripSeparator4
             // 
-            this.clearSamplesToolStripMenuItem.Name = "clearSamplesToolStripMenuItem";
-            this.clearSamplesToolStripMenuItem.Size = new System.Drawing.Size(172, 24);
-            this.clearSamplesToolStripMenuItem.Text = "Clear Samples";
-            this.clearSamplesToolStripMenuItem.Click += new System.EventHandler(this.clearSamplesToolStripMenuItem_Click);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(218, 6);
+            // 
+            // setSampleAgeLimitToolStripMenuItem
+            // 
+            this.setSampleAgeLimitToolStripMenuItem.Name = "setSampleAgeLimitToolStripMenuItem";
+            this.setSampleAgeLimitToolStripMenuItem.Size = new System.Drawing.Size(221, 24);
+            this.setSampleAgeLimitToolStripMenuItem.Text = "Set Sample Age Limit";
+            this.setSampleAgeLimitToolStripMenuItem.Click += new System.EventHandler(this.setSampleAgeLimitToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(12, 27);
+            this.splitContainer1.Location = new System.Drawing.Point(15, 34);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel1.ClientSizeChanged += new System.EventHandler(this.splitContainer1_Panel2_ClientSizeChanged);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button_removeData);
-            this.splitContainer1.Panel2.Controls.Add(this.comboBox_timeSpan);
-            this.splitContainer1.Panel2.Controls.Add(this.button_nextTime);
-            this.splitContainer1.Panel2.Controls.Add(this.button_previousTime);
-            this.splitContainer1.Panel2.Controls.Add(this.lineCurvesChartType);
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
             this.splitContainer1.Panel2.ClientSizeChanged += new System.EventHandler(this.splitContainer1_Panel2_ClientSizeChanged);
-            this.splitContainer1.Size = new System.Drawing.Size(928, 552);
-            this.splitContainer1.SplitterDistance = 255;
-            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.Size = new System.Drawing.Size(1160, 690);
+            this.splitContainer1.SplitterDistance = 318;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 23;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.totalInfoBox, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(318, 204);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // totalInfoBox
+            // 
+            this.totalInfoBox.AutoSize = true;
+            this.totalInfoBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.totalInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totalInfoBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalInfoBox.Location = new System.Drawing.Point(2, 2);
+            this.totalInfoBox.Margin = new System.Windows.Forms.Padding(2);
+            this.totalInfoBox.MaximumSize = new System.Drawing.Size(344, 200);
+            this.totalInfoBox.MinimumSize = new System.Drawing.Size(344, 200);
+            this.totalInfoBox.Name = "totalInfoBox";
+            this.totalInfoBox.Size = new System.Drawing.Size(344, 200);
+            this.totalInfoBox.TabIndex = 0;
+            this.totalInfoBox.Visible = false;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.lineCurvesChartType, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button_removeData, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.button_nextTime, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.comboBox_timeSpan, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.button_previousTime, 2, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(837, 690);
+            this.tableLayoutPanel2.TabIndex = 23;
+            // 
+            // lineCurvesChartType
+            // 
+            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel2.SetColumnSpan(this.lineCurvesChartType, 4);
+            this.lineCurvesChartType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lineCurvesChartType.Location = new System.Drawing.Point(4, 4);
+            this.lineCurvesChartType.Margin = new System.Windows.Forms.Padding(4);
+            this.lineCurvesChartType.Name = "lineCurvesChartType";
+            this.lineCurvesChartType.Size = new System.Drawing.Size(829, 645);
+            this.lineCurvesChartType.TabIndex = 18;
             // 
             // button_removeData
             // 
             this.button_removeData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_removeData.Location = new System.Drawing.Point(8, 523);
+            this.button_removeData.Location = new System.Drawing.Point(4, 657);
+            this.button_removeData.Margin = new System.Windows.Forms.Padding(4);
             this.button_removeData.Name = "button_removeData";
-            this.button_removeData.Size = new System.Drawing.Size(109, 23);
+            this.button_removeData.Size = new System.Drawing.Size(136, 29);
             this.button_removeData.TabIndex = 22;
             this.button_removeData.Text = "Remove Data";
             this.button_removeData.UseVisualStyleBackColor = true;
             this.button_removeData.Click += new System.EventHandler(this.button_removeData_Click);
+            // 
+            // button_nextTime
+            // 
+            this.button_nextTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_nextTime.Location = new System.Drawing.Point(798, 657);
+            this.button_nextTime.Margin = new System.Windows.Forms.Padding(4);
+            this.button_nextTime.Name = "button_nextTime";
+            this.button_nextTime.Size = new System.Drawing.Size(35, 29);
+            this.button_nextTime.TabIndex = 20;
+            this.button_nextTime.Text = ">";
+            this.button_nextTime.UseVisualStyleBackColor = true;
+            this.button_nextTime.Click += new System.EventHandler(this.button_nextTime_Click);
             // 
             // comboBox_timeSpan
             // 
@@ -345,53 +432,33 @@
             "Hour",
             "6 Hours",
             "Day"});
-            this.comboBox_timeSpan.Location = new System.Drawing.Point(492, 521);
+            this.comboBox_timeSpan.Location = new System.Drawing.Point(597, 661);
+            this.comboBox_timeSpan.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox_timeSpan.Name = "comboBox_timeSpan";
-            this.comboBox_timeSpan.Size = new System.Drawing.Size(121, 28);
+            this.comboBox_timeSpan.Size = new System.Drawing.Size(150, 28);
             this.comboBox_timeSpan.TabIndex = 21;
-            // 
-            // button_nextTime
-            // 
-            this.button_nextTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_nextTime.Location = new System.Drawing.Point(653, 523);
-            this.button_nextTime.Name = "button_nextTime";
-            this.button_nextTime.Size = new System.Drawing.Size(28, 23);
-            this.button_nextTime.TabIndex = 20;
-            this.button_nextTime.Text = ">";
-            this.button_nextTime.UseVisualStyleBackColor = true;
-            this.button_nextTime.Click += new System.EventHandler(this.button_nextTime_Click);
             // 
             // button_previousTime
             // 
             this.button_previousTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_previousTime.Location = new System.Drawing.Point(619, 523);
+            this.button_previousTime.Location = new System.Drawing.Point(755, 657);
+            this.button_previousTime.Margin = new System.Windows.Forms.Padding(4);
             this.button_previousTime.Name = "button_previousTime";
-            this.button_previousTime.Size = new System.Drawing.Size(28, 23);
+            this.button_previousTime.Size = new System.Drawing.Size(35, 29);
             this.button_previousTime.TabIndex = 19;
             this.button_previousTime.Text = "<";
             this.button_previousTime.UseVisualStyleBackColor = true;
             this.button_previousTime.Click += new System.EventHandler(this.button_previousTime_Click);
-            // 
-            // lineCurvesChartType
-            // 
-            this.lineCurvesChartType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineCurvesChartType.BackColor = System.Drawing.Color.White;
-            this.lineCurvesChartType.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lineCurvesChartType.Location = new System.Drawing.Point(0, 0);
-            this.lineCurvesChartType.Name = "lineCurvesChartType";
-            this.lineCurvesChartType.Size = new System.Drawing.Size(705, 515);
-            this.lineCurvesChartType.TabIndex = 18;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.nextSampletoolStripStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 579);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 730);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(952, 25);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1190, 25);
             this.statusStrip1.TabIndex = 24;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -411,28 +478,33 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(952, 604);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1190, 755);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindow";
             this.Text = "Perk TV Tracker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.LocationChanged += new System.EventHandler(this.MainWindow_Resize);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
-            this.flowLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -443,7 +515,6 @@
         #endregion
 
         private LineCurvesChartType lineCurvesChartType;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -466,7 +537,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem pointsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearDataToolStripMenuItem;
-        private SessionViewControl sessionViewControl1;
+        private SessionViewControl totalInfoBox;
         private System.Windows.Forms.ToolStripMenuItem persistDataToolStripMenuItem;
         private System.Windows.Forms.Button button_nextTime;
         private System.Windows.Forms.Button button_previousTime;
@@ -475,7 +546,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem minimizeToTrayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearSamplesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showMoreStatsToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ToolStripMenuItem showMoreStatisticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showTotalInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem setSampleAgeLimitToolStripMenuItem;
     }
 }
 

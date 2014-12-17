@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace PerkTVTracker
 {
@@ -10,6 +13,12 @@ namespace PerkTVTracker
     public class LinearDataProcessor
     {
         private List<Sample> _samples = new List<Sample>();
+        private TimeSpan _sampleAgeLimit;
+
+        public LinearDataProcessor()
+        {
+            _sampleAgeLimit = new TimeSpan(1, 0, 0);
+        }
 
         public List<Sample> Samples
         {
@@ -17,7 +26,16 @@ namespace PerkTVTracker
             set { _samples = value; }
         }
 
-        public TimeSpan SampleAgeLimit { get; set; }
+        [XmlIgnore]
+        public TimeSpan SampleAgeLimit
+        {
+            get { return _sampleAgeLimit; }
+            set
+            {
+                _sampleAgeLimit = value;
+                PruneSamples();
+            }
+        }
 
         public DataSummary GetDataSummary()
         {
@@ -39,19 +57,19 @@ namespace PerkTVTracker
                 if (_samples.Count > 1)
                 {
                     Sample oldest = _samples[0];
-                    summary.HourlyRate = Math.Round((latest.LifetimePointCount - oldest.LifetimePointCount) / (latest.Time - oldest.Time).TotalHours);
+                    summary.HourlyRate = Math.Round((latest.LifetimeVideoCount - oldest.LifetimeVideoCount) * 2 / (latest.Time - oldest.Time).TotalHours);
                 }
 
                 return summary;
             }
         }
 
-        public void AddSample(int currentPointCount, int lifetimePointCount, DateTime timestamp)
+        public void AddSample(int currentPointCount, int lifetimePointCount, int lifetimeVidCount, DateTime timestamp)
         {
             lock (this)
             {
                 // Add the sample, prune any old ones, and update the hourly rate
-                _samples.Add(new Sample(currentPointCount, lifetimePointCount, timestamp));
+                _samples.Add(new Sample(currentPointCount, lifetimePointCount, lifetimeVidCount, timestamp));
                 PruneSamples();
             }
         }
@@ -66,19 +84,19 @@ namespace PerkTVTracker
             Sample oldest = _samples[0];
             Sample latest = _samples.Last();
 
-            if ((latest.Time - oldest.Time).TotalMinutes <= 60)
+            if ((latest.Time - oldest.Time).TotalMinutes <= SampleAgeLimit.TotalMinutes)
             {
                 // Nothing to do
                 return;
             }
 
-            // Find the newest that's also older than an hour
+            // Find the newest that's also older than the age limit
             int i = 0;
             for (; i < _samples.Count; i++)
             {
                 Sample sample = _samples[i];
 
-                if ((latest.Time - sample.Time).TotalMinutes <= 60)
+                if ((latest.Time - sample.Time).TotalMinutes <= SampleAgeLimit.TotalMinutes)
                 {
                     break;
                 }

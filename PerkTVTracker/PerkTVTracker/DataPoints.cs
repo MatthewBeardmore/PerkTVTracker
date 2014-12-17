@@ -34,7 +34,7 @@ namespace PerkTVTracker
             _points.Add(summary);
         }
 
-        public List<Series> ConstructSeries(Account account)
+        public List<Series> ConstructSeries(Account account, ref Dictionary<DateTime, double> totalPoints)
         {
             List<Series> allSeries = new List<Series>();
 
@@ -55,6 +55,10 @@ namespace PerkTVTracker
                 }
                 lastDataPoint = summary.LastSampleTimestamp;
 
+                if (!totalPoints.ContainsKey(summary.LastSampleTimestamp))
+                    totalPoints.Add(summary.LastSampleTimestamp, 0);
+
+                totalPoints[summary.LastSampleTimestamp] += summary.HourlyRate;
                 series.Points.AddXY(summary.LastSampleTimestamp, summary.HourlyRate);
             }
 

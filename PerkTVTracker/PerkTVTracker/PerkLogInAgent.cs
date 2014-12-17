@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,12 +13,16 @@ namespace PerkTVTracker
     {
         public static PerkSession Login(Account account)
         {
-            HttpWebRequest req = WebRequest.CreateHttp("https://perk.com/accounts/ajax_login");
+            HttpWebRequest req = WebRequest.CreateHttp("https://api.perk.com/oauth/token");
             req.ContentType = "application/x-www-form-urlencoded";
             req.Method = "POST";
-            req.CookieContainer = new CookieContainer();
 
-            string content = "email=" + WebUtility.UrlEncode(account.Email) + "&password=" + WebUtility.UrlEncode(account.Password);
+            string content = 
+                string.Format("grant_type=password&username={0}&password={1}" +
+                                  "&type=email&device_type=perk_lite_chrome&client_id=11111&" +
+                                  "client_secret=c437a24bf277dfea375f",
+                              WebUtility.UrlEncode(account.Email),
+                              WebUtility.UrlEncode(account.Password));
 
             using (Stream reqStream = req.GetRequestStream())
             using (var sw = new StreamWriter(reqStream))
@@ -26,9 +31,16 @@ namespace PerkTVTracker
                 sw.Close();
             }
 
-            using (var resp = req.GetResponse() as HttpWebResponse)
+            using (WebResponse resp = req.GetResponse())
+            using (var sr = new StreamReader(resp.GetResponseStream()))
             {
-                return new PerkSession(new CookieCollection() { resp.Cookies });
+                string str = sr.ReadToEnd();
+                JToken token = JObject.Parse(str);
+
+                string accessToken = (string)token.SelectToken("access_token");
+                string userId = (string)token.SelectToken("user_id");
+
+                return new PerkSession(userId, accessToken);
             }
         }
     }

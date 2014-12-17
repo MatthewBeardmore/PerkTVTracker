@@ -16,7 +16,7 @@ namespace PerkTVTracker
         {
             get
             {
-                return new Account() { Email = textBox_email.Text, Password = textBox_password.Text };
+                return new Account { Email = textboxEmail.Text, Password = textboxPassword.Text };
             }
         }
 
@@ -25,29 +25,34 @@ namespace PerkTVTracker
             InitializeComponent();
         }
 
-        private void button_done_Click(object sender, EventArgs e)
+        private void OnAddClick(object sender, EventArgs e)
         {
-            if (textBox_email.Text == "")
+            if (string.IsNullOrWhiteSpace(textboxEmail.Text))
             {
-                MessageBox.Show("Fuck off");
+                MessageBox.Show("Please enter a valid email.",
+                                "Invalid information",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return;
             }
-            if(textBox_password.Text == "")
+
+            if (string.IsNullOrWhiteSpace(textboxPassword.Text))
             {
-                MessageBox.Show("Youse a dumbass");
+                MessageBox.Show("Please enter a valid password.",
+                                "Invalid information",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return;
             }
-            DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.Close();
+
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
-        private void textBox_password_KeyDown(object sender, KeyEventArgs e)
+        private void OnCancelClick(object sender, EventArgs e)
         {
-            if(e.KeyCode == Keys.Return)
-            {
-                e.Handled = true;
-                button_done_Click(sender, e);
-            }
-        }
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }        
     }
 }

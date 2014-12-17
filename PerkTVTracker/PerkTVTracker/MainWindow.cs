@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using HttpServer;
+﻿using HttpServer;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -63,6 +62,9 @@ namespace PerkTVTracker
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
             trayIcon.Visible = true;
+
+            showTotalInformationToolStripMenuItem.Checked = Program.Settings.ShowTotalInformation;
+            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
         }
 
         #region System Tray code
@@ -160,7 +162,7 @@ namespace PerkTVTracker
             {
                 DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
-                (flowLayoutPanel1.Controls[cnt] as SessionViewControl).UpdateDisplay(summary);
+                (tableLayoutPanel1.Controls[cnt] as SessionViewControl).UpdateDisplay(summary);
 
                 if (numSecondsTilNextSample == 0)
                     numSecondsTilNextSample = (int)Math.Round((summary.LastSampleTimestamp.AddMilliseconds(_sampleTimer.Interval) -
@@ -187,7 +189,7 @@ namespace PerkTVTracker
                 PointCount = allPointCount,
                 LifetimePointCount = allLifetimePointCount
             };
-            (flowLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
+            (tableLayoutPanel1.Controls[0] as SessionViewControl).UpdateDisplay(totalSummary);
         }
 
         private void OnFormShown(object sender, EventArgs e)
@@ -196,8 +198,6 @@ namespace PerkTVTracker
             minimizeToTrayToolStripMenuItem.Checked = Program.Settings.MinimizeToTray;
             persistDataToolStripMenuItem.Checked = !Program.Settings.ClearDataPointsOnStartup;
             comboBox_timeSpan.SelectedIndex = 1;
-            splitContainer1.SplitterDistance = flowLayoutPanel1.Width = flowLayoutPanel1.Controls[0].Width + 6;
-
             if(Program.Settings.GraphMinimum != DateTime.MinValue)
             {
                 lineCurvesChartType.SetMinMax(Program.Settings.GraphMinimum, Program.Settings.GraphMaximum);
@@ -212,26 +212,33 @@ namespace PerkTVTracker
                 WindowState = Program.Settings.LastWindowState;
             }
 
+            splitContainer1.SplitterDistance = Program.Settings.MainWindowSplitterDistance;
+            splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
+
             foreach(Account account in Program.Settings.Accounts)
             {
-                AddAccount(account);
+                Account acc = account;
+                AddAccount(ref acc);
             }
 
             OnSampleTimerTick(_sampleTimer, EventArgs.Empty);
         }
 
-        private void AddAccount(Account account)
+        private void AddAccount(ref Account account)
         {
             SessionViewControl control = new SessionViewControl(account, RemoveAccount, RebuildGraphs);
-            flowLayoutPanel1.Controls.Add(control);
+            control.Dock = DockStyle.Fill;
+            control.AutoSize = true;
+            control.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.Controls.Add(control);
 
-            if (account.Session == null || !account.Session.HasCookies)
+            if (account.Session == null || !account.Session.HasCredentials)
                 account.Session = PerkLogInAgent.Login(account);
         }
 
         private void RemoveAccount(Account account, SessionViewControl control)
         {
-            flowLayoutPanel1.Controls.Remove(control);
+            tableLayoutPanel1.Controls.Remove(control);
             Program.Settings.RemoveAccount(account);
         }
 
@@ -248,8 +255,13 @@ namespace PerkTVTracker
             {
                 try
                 {
-                    KeyValuePair<int, int> pointCount = await account.Session.GetCurrentPointCount();
-                    account.LinearDataProcessor.AddSample(pointCount.Key, pointCount.Value, sampleTime);
+                    Task<KeyValuePair<int, int>> pointCountTask = account.Session.GetCurrentPointCount();
+                    Task<int> lifetimeVidCountTask = account.Session.GetLifetimeVideoCount();
+                    await Task.WhenAll(pointCountTask, lifetimeVidCountTask);
+
+                    KeyValuePair<int, int> pointCount = pointCountTask.Result;
+                    int lifetimeVidCount = lifetimeVidCountTask.Result;
+                    account.LinearDataProcessor.AddSample(pointCount.Key, pointCount.Value, lifetimeVidCount, sampleTime);
 
                     DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 
@@ -264,10 +276,6 @@ namespace PerkTVTracker
                 catch { }//We just won't have a data point here
             }
 
-            Program.Settings.LastWindowState = WindowState;
-            Program.Settings.LastWindowSize = Size;
-            Program.Settings.LastWindowLocation = Location;
-
             DateTime minimum, maximum;
             lineCurvesChartType.GetMinMax(out minimum, out maximum);
 
@@ -276,7 +284,6 @@ namespace PerkTVTracker
             Program.Settings.GraphType = GetGraphType();
 
             Program.Settings.SaveSettings();
-
 
             if (updateGraph)
             {
@@ -296,12 +303,13 @@ namespace PerkTVTracker
         {
             GraphType graphType = GetGraphType();
             List<Series> series = new List<Series>();
+            Dictionary<DateTime, double> totalPoints = new Dictionary<DateTime, double>();
             foreach (var acc in Program.Settings.Accounts)
             {
                 if (acc.ShowOnGraph)
-                    series.AddRange(acc.DataPoints.ConstructSeries(acc));
+                    series.AddRange(acc.DataPoints.ConstructSeries(acc, ref totalPoints));
             }
-            lineCurvesChartType.SetSeries(series, graphType);
+            lineCurvesChartType.SetSeries(series, totalPoints, graphType);
         }
 
         private GraphType GetGraphType()
@@ -339,8 +347,9 @@ namespace PerkTVTracker
             AddAccount form = new AddAccount();
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AddAccount(form.Account);
-                Program.Settings.AddAccount(form.Account);
+                Account account = form.Account;
+                AddAccount(ref account);
+                Program.Settings.AddAccount(account);
                 OnSampleTimerTick(_sampleTimer, EventArgs.Empty, false);
             }
         }
@@ -426,15 +435,14 @@ namespace PerkTVTracker
 
         private DateTime AddTime(DateTime time, bool forward, TimeChangeEnum change)
         {
-            if (change == TimeChangeEnum.Day)
-                return time.AddDays(1 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.Hour)
-                return time.AddHours(1 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.SixHours)
-                return time.AddHours(6 * (forward ? 1 : -1));
-            if (change == TimeChangeEnum.ThirtyMinutes)
-                return time.AddMinutes(30 * (forward ? 1 : -1));
-            return time;
+            switch (change)
+            {
+                case TimeChangeEnum.Day: return time.AddDays(1 * (forward ? 1 : -1));
+                case TimeChangeEnum.Hour: return time.AddHours(1 * (forward ? 1 : -1));
+                case TimeChangeEnum.SixHours: return time.AddHours(6 * (forward ? 1 : -1));
+                case TimeChangeEnum.ThirtyMinutes: return time.AddMinutes(30 * (forward ? 1 : -1));
+                default: return time;
+            }
         }
 
         private void button_removeData_Click(object sender, EventArgs e)
@@ -449,7 +457,7 @@ namespace PerkTVTracker
                     List<DataSummary> pointsToRemove = new List<DataSummary>();
                     foreach (DataSummary summary in acc.DataPoints.Points)
                     {
-                        if(summary.LastSampleTimestamp >= minimum && summary.LastSampleTimestamp <= maximum)
+                        if (summary.LastSampleTimestamp <= maximum && summary.LastSampleTimestamp >= minimum)
                         {
                             pointsToRemove.Add(summary);
                         }
@@ -464,8 +472,23 @@ namespace PerkTVTracker
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if (MessageBox.Show("Do you want to quit?", "Quit?", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             _httpServer.Stop();
             trayIcon.Visible = false;
+
+            // Save window state
+            Program.Settings.LastWindowState = WindowState;
+            Program.Settings.LastWindowSize = Size;
+            Program.Settings.LastWindowLocation = Location;
+            Program.Settings.SaveSettings();
         }
 
         private void minimizeToTrayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -482,11 +505,44 @@ namespace PerkTVTracker
             }
         }
 
-        private void showMoreStatsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showMoreStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MoreStatsWindow window = new MoreStatsWindow();
             window.UpdateStatsDisplay();
             window.ShowDialog();
+        }
+
+        private void showTotalInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.Settings.ShowTotalInformation = showTotalInformationToolStripMenuItem.Checked;
+            Program.Settings.SaveSettings();
+
+            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Program.Settings.MainWindowSplitterDistance = splitContainer1.SplitterDistance;
+            Program.Settings.SaveSettings();
+        }
+
+        private void setSampleAgeLimitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SetSampleAgeLimitDialog())
+            {
+                var diagResult = dialog.ShowDialog();
+                if (diagResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Update every account
+                    foreach (var account in Program.Settings.Accounts)
+                    {
+                        account.LinearDataProcessor.SampleAgeLimit = dialog.SampleAgeLimit;
+                    }
+
+                    Program.Settings.SampleAgeLimit = dialog.SampleAgeLimit;
+                    Program.Settings.SaveSettings();
+                }
+            }
         }
     }
 
