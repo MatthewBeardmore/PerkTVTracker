@@ -163,7 +163,8 @@ namespace PerkTVTracker
                 DateTime lastDataPoint = DateTime.MinValue;
                 Series totalSeries = DataPoints.CreateDefaultSeries("Total");
                 int cntr = 1;
-
+                
+                
                 var totalPointsLst = totalPoints.ToList();
                 totalPointsLst.Sort((a, b) => a.Key.CompareTo(b.Key));
 
