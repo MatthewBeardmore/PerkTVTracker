@@ -57,19 +57,19 @@ namespace PerkTVTracker
                 if (_samples.Count > 1)
                 {
                     Sample oldest = _samples[0];
-                    summary.HourlyRate = Math.Round((latest.LifetimeVideoCount - oldest.LifetimeVideoCount) * 2 / (latest.Time - oldest.Time).TotalHours);
+                    summary.HourlyRate = Math.Round((latest.LifetimePointCount - oldest.LifetimePointCount) * 2 / (latest.Time - oldest.Time).TotalHours);
                 }
 
                 return summary;
             }
         }
 
-        public void AddSample(int currentPointCount, int lifetimePointCount, int lifetimeVidCount, DateTime timestamp)
+        public void AddSample(int currentPointCount, int lifetimePointCount, DateTime timestamp)
         {
             lock (this)
             {
                 // Add the sample, prune any old ones, and update the hourly rate
-                _samples.Add(new Sample(currentPointCount, lifetimePointCount, lifetimeVidCount, timestamp));
+                _samples.Add(new Sample(currentPointCount, lifetimePointCount, timestamp));
                 PruneSamples();
             }
         }

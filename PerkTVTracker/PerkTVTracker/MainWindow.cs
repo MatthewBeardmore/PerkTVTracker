@@ -255,13 +255,9 @@ namespace PerkTVTracker
             {
                 try
                 {
-                    Task<KeyValuePair<int, int>> pointCountTask = account.Session.GetCurrentPointCount();
-                    Task<int> lifetimeVidCountTask = account.Session.GetLifetimeVideoCount();
-                    await Task.WhenAll(pointCountTask, lifetimeVidCountTask);
-
-                    KeyValuePair<int, int> pointCount = pointCountTask.Result;
-                    int lifetimeVidCount = lifetimeVidCountTask.Result;
-                    account.LinearDataProcessor.AddSample(pointCount.Key, pointCount.Value, lifetimeVidCount, sampleTime);
+                    KeyValuePair<int, int> pointCount = await account.Session.GetCurrentPointCount();
+                    
+                    account.LinearDataProcessor.AddSample(pointCount.Key, pointCount.Value, sampleTime);
 
                     DataSummary summary = account.LinearDataProcessor.GetDataSummary();
 

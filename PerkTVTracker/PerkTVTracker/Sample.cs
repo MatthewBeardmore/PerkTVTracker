@@ -11,11 +11,10 @@ namespace PerkTVTracker
     {
         public Sample() { }
 
-        public Sample(int pointCount, int lifetimePointCount, int lifetimeVidCount, DateTime time)
+        public Sample(int pointCount, int lifetimePointCount, DateTime time)
         {
             PointCount = pointCount;
             LifetimePointCount = lifetimePointCount;
-            LifetimeVideoCount = lifetimeVidCount;
             Time = time;
         }
 
