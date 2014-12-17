@@ -57,7 +57,7 @@ namespace PerkTVTracker
                 if (_samples.Count > 1)
                 {
                     Sample oldest = _samples[0];
-                    summary.HourlyRate = Math.Round((latest.LifetimePointCount - oldest.LifetimePointCount) * 2 / (latest.Time - oldest.Time).TotalHours);
+                    summary.HourlyRate = Math.Round((latest.LifetimePointCount - oldest.LifetimePointCount) / (latest.Time - oldest.Time).TotalHours);
                 }
 
                 return summary;
