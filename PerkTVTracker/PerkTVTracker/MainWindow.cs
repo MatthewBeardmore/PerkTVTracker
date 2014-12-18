@@ -27,6 +27,7 @@ namespace PerkTVTracker
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private FormWindowState windowState;
+        private SessionViewControl totalInfoBox;
 
         public MainWindow()
         {
@@ -64,7 +65,6 @@ namespace PerkTVTracker
             trayIcon.Visible = true;
 
             showTotalInformationToolStripMenuItem.Checked = Program.Settings.ShowTotalInformation;
-            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
         }
 
         #region System Tray code
@@ -214,6 +214,13 @@ namespace PerkTVTracker
 
             splitContainer1.SplitterDistance = Program.Settings.MainWindowSplitterDistance;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
+
+            totalInfoBox = new SessionViewControl();
+            totalInfoBox.Dock = DockStyle.Fill;
+            totalInfoBox.AutoSize = true;
+            totalInfoBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            totalInfoBox.Visible = Program.Settings.ShowTotalInformation;
+            tableLayoutPanel1.Controls.Add(totalInfoBox);
 
             foreach(Account account in Program.Settings.Accounts)
             {
