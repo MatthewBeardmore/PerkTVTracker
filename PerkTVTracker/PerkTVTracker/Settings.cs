@@ -85,6 +85,18 @@ namespace PerkTVTracker
         [XmlIgnore]
         public TimeSpan SampleAgeLimit { get; set; }
 
+        public int AlertThreshold
+        {
+            get;
+            set;
+        }
+
+        public int AlertTime
+        {
+            get;
+            set;
+        }
+
         // XmlSerializer does not support TimeSpan, so use this property for 
         // serialization instead. Do not use this in code; use SampleAgeLimit instead.
         // http://stackoverflow.com/a/6734557

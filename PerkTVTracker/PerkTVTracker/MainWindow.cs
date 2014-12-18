@@ -288,6 +288,23 @@ namespace PerkTVTracker
 
             Program.Settings.SaveSettings();
 
+            if (Program.Settings.AlertThreshold != 0 && Program.Settings.AlertTime != 0)
+            {
+                //Alert info
+                double oldAllHourlyRate = 0;
+                foreach (Account account in Program.Settings.Accounts)
+                {
+                    DataSummary pt = account.DataPoints.GetDataPointXMinutesAgo(Program.Settings.AlertTime);
+                    if (pt != null)
+                        oldAllHourlyRate += pt.HourlyRate;
+                }
+
+                if(oldAllHourlyRate > allHourlyRate && (oldAllHourlyRate - allHourlyRate) > Program.Settings.AlertThreshold)
+                {
+                    trayIcon.ShowBalloonTip(5000, "Alert!", "Points per hour have dropped below acceptable thresholds!", ToolTipIcon.Warning);
+                }
+            }
+
             if (updateGraph)
             {
                 RebuildGraphs();
@@ -545,6 +562,17 @@ namespace PerkTVTracker
                     Program.Settings.SampleAgeLimit = dialog.SampleAgeLimit;
                     Program.Settings.SaveSettings();
                 }
+            }
+        }
+
+        private void setAlertThresholdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetNumericValue form = new SetNumericValue(Program.Settings.AlertThreshold, Program.Settings.AlertTime);
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Program.Settings.AlertThreshold = form.Value.Key;
+                Program.Settings.AlertTime = form.Value.Value;
+                Program.Settings.SaveSettings();
             }
         }
     }

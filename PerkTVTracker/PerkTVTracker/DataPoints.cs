@@ -34,6 +34,18 @@ namespace PerkTVTracker
             _points.Add(summary);
         }
 
+        public DataSummary GetDataPointXMinutesAgo(int minutes)
+        {
+            foreach (DataSummary summary in Points)
+            {
+                TimeSpan diffFromNow = DateTime.Now - summary.LastSampleTimestamp;
+                int totalMins = (int)diffFromNow.TotalMinutes;
+                if (totalMins == minutes)
+                    return summary;
+            }
+            return null;
+        }
+
         public List<Series> ConstructSeries(Account account, ref Dictionary<DateTime, double> totalPoints)
         {
             List<Series> allSeries = new List<Series>();

@@ -62,6 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="SetNumericValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetNumericValue.Designer.cs">
+      <DependentUpon>SetNumericValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +86,9 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SetNumericValue.resx">
+      <DependentUpon>SetNumericValue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddAccount.resx">
       <DependentUpon>AddAccount.cs</DependentUpon>
     </EmbeddedResource>
