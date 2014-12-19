@@ -38,10 +38,6 @@
     <ApplicationIcon>perkLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HttpServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d7063c47c583695a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\HttpServer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -78,7 +74,6 @@
     <Compile Include="DataPoints.cs" />
     <Compile Include="DataSummary.cs" />
     <Compile Include="GraphType.cs" />
-    <Compile Include="HttpServer.cs" />
     <Compile Include="LinearDataProcessor.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

@@ -1,5 +1,4 @@
-﻿using HttpServer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -23,7 +22,6 @@ namespace PerkTVTracker
         private Random _generator = new Random();
         private Timer _sampleTimer = new Timer();
         private Timer _displayTimer = new Timer();
-        private HttpListenerManager _httpServer;
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private FormWindowState windowState;
@@ -43,10 +41,6 @@ namespace PerkTVTracker
             _displayTimer.Tick += OnDisplayTimerTick;
             _displayTimer.Start();
 
-            _httpServer = new HttpListenerManager(1);
-            _httpServer.ProcessRequest += httpServer_ProcessRequest;
-            _httpServer.Start(10000);
-
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
             trayMenu.MenuItems.Add("Show", OnShow);
@@ -59,6 +53,7 @@ namespace PerkTVTracker
             trayIcon.Text = "Perk TV Tracker";
             trayIcon.Icon = Icon.FromHandle(PerkTVTracker.Properties.Resources.perkLogoSmall.GetHicon());
             trayIcon.Click += OnShow;
+            trayIcon.BalloonTipClicked += OnShow;
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
@@ -76,7 +71,9 @@ namespace PerkTVTracker
 
         private void OnShow(object sender, EventArgs e)
         {
+            this.TopMost = true;
             this.Show();
+            this.TopMost = false;
             this.WindowState = windowState;
         }
 
@@ -92,63 +89,6 @@ namespace PerkTVTracker
         }
 
         #endregion
-
-        void httpServer_ProcessRequest(IHttpClientContext context, IHttpRequest req)
-        {
-            HttpResponse httpResponse = new HttpResponse(context, req);
-
-            using(Stream outputStream = httpResponse.Body)
-            {
-                if (req.UriPath == "/app")
-                {
-                    AppData appData = new AppData();
-                    appData.Accounts = new List<AccountData>();
-                    int allPointCount = 0;
-                    int allLifetimePointCount = 0;
-                    double allHourlyRate = 0;
-                    foreach (Account account in Program.Settings.Accounts)
-                    {
-                        DataSummary summary = account.LinearDataProcessor.GetDataSummary();
-
-                        appData.Accounts.Add(new AccountData()
-                        {
-                            Email = account.Email,
-                            CurrentPoints = summary.PointCount,
-                            LifetimePoints = summary.LifetimePointCount,
-                            EstimatedHourlyRate = summary.HourlyRate
-                        });
-
-                        allPointCount += summary.PointCount;
-                        allLifetimePointCount += summary.LifetimePointCount;
-                        allHourlyRate += summary.HourlyRate;
-                    }
-
-                    int totalHourlyRateAmt = (int)Math.Round(allHourlyRate);
-                    appData.Total = new AccountData()
-                    {
-                        CurrentPoints = allPointCount,
-                        LifetimePoints = allLifetimePointCount,
-                        EstimatedHourlyRate = totalHourlyRateAmt
-                    };
-
-                    XmlSerializer serializer = new XmlSerializer(typeof(AppData));
-                    serializer.Serialize(outputStream, appData);
-                    httpResponse.AddHeader("Content-Type", "text/xml");
-                }
-                else
-                {
-                    System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(this.Width, this.Height);
-                    Invoke(new Action(() =>
-                    {
-                        this.DrawToBitmap(bmp, this.ClientRectangle);
-                    }));
-                    bmp.Save(outputStream, ImageFormat.Png);
-                    httpResponse.AddHeader("Content-Type", "image/png");
-                }
-                outputStream.Flush();
-                httpResponse.Send();
-            }
-        }
 
         private void OnDisplayTimerTick(object sender, EventArgs e)
         {
@@ -501,7 +441,6 @@ namespace PerkTVTracker
                 }
             }
 
-            _httpServer.Stop();
             trayIcon.Visible = false;
 
             // Save window state
